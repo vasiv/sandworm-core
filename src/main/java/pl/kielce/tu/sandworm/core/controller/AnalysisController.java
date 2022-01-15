@@ -23,8 +23,9 @@ public class AnalysisController {
     }
 
     @RequestMapping("/**")
-    public ResponseEntity<String> analyzeRequest(@RequestBody String body, HttpMethod method, HttpServletRequest request,
-                                                 HttpServletResponse response) throws URISyntaxException {
+    public ResponseEntity<String> analyzeRequest(@RequestBody(required = false) String body, HttpMethod method,
+                                                 HttpServletRequest request, HttpServletResponse response) throws
+            URISyntaxException {
         return proxyService.proxyRequest(body, method, request, response);
     }
 }
