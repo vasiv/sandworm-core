@@ -1,0 +1,2 @@
+none http any any -> any any (msg:”Incoming HTTP request.”; sid:00001; rev:1;)
+#drop http 192.168.0.14 any -> any any (msg:”Incoming HTTP request from malicious host.”; sid:00002; rev:1;)
