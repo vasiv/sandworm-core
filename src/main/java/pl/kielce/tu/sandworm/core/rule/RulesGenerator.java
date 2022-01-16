@@ -1,16 +1,21 @@
 package pl.kielce.tu.sandworm.core.rule;
 
-import pl.kielce.tu.sandworm.core.RuleParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.ParseException;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toSet;
+
 public class RulesGenerator {
+
+    Logger logger = LoggerFactory.getLogger(RulesGenerator.class);
 
     private static final String COMMENTED_OUT_PREFIX = "#";
     private final RuleParser parser = new RuleParser();
@@ -24,11 +29,27 @@ public class RulesGenerator {
         try (Stream<String> lines = Files.lines(ruleSetPath)) {
             return lines
                     .filter(this::isNotCommentedOut)
-                    .map(parser::parse).collect(Collectors.toSet());
+                    .map(this::parse)
+                    .filter(this::isNotNull)
+                    .collect(toSet());
         }
     }
 
     private boolean isNotCommentedOut(String line) {
         return !line.startsWith(COMMENTED_OUT_PREFIX);
+    }
+
+    private Rule parse(String line) {
+        try {
+            return parser.parse(line);
+        } catch (ParseException e) {
+            logger.error("Cannot generate Rule due to parsing error: ", e);
+            logger.error("Rule skipped: {}", line);
+            return null;
+        }
+    }
+
+    private boolean isNotNull(Rule rule) {
+        return rule != null;
     }
 }
