@@ -26,6 +26,34 @@ public class Rule {
         this.options = builder.options;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public String getSourceAddress() {
+        return sourceAddress;
+    }
+
+    public String getSourcePort() {
+        return sourcePort;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public String getDestinationAddress() {
+        return destinationAddress;
+    }
+
+    public String getDestinationPort() {
+        return destinationPort;
+    }
+
     @Override
     public String toString() {
         return "Rule{" +
