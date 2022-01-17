@@ -26,16 +26,8 @@ public class SandwormCoreConfiguration {
     @Value("${rules.set}")
     private String ruleSetResourceName;
 
-    private final Set<Rule> rules;
-
-    public SandwormCoreConfiguration() throws URISyntaxException, IOException {
-        Path ruleSetPath = Paths.get(getResourceUri(ruleSetResourceName));
-        RulesGenerator rulesGenerator = new RulesGenerator(ruleSetPath);
-        this.rules = rulesGenerator.generate();
-    }
-
     @Bean
-    public HttpAnalysisService analysisService() {
+    public HttpAnalysisService analysisService() throws URISyntaxException, IOException {
         return new StandardHttpAnalysisService(getHttpRules());
     }
 
@@ -44,8 +36,11 @@ public class SandwormCoreConfiguration {
         return resource != null ? resource.toURI() : URI.create(EMPTY);
     }
 
-    private Set<Rule> getHttpRules() {
-        return rules.stream()
+    private Set<Rule> getHttpRules() throws URISyntaxException, IOException {
+        Path ruleSetPath = Paths.get(getResourceUri(ruleSetResourceName));
+        RulesGenerator rulesGenerator = new RulesGenerator(ruleSetPath);
+        return rulesGenerator.generate()
+                .stream()
                 .filter(this::isHttpProtocolUsed)
                 .collect(Collectors.toSet());
     }
