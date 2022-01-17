@@ -22,7 +22,7 @@ public class RuleParser {
     private static final int DESTINATION_ADDRESS_INDEX = 5;
     private static final int DESTINATION_PORT_INDEX = 6;
     private static final String ONE_WAY_SIGN = "->";
-    private static final String BOTH_WAYS_SIGN = "<->";
+    private static final String BOTH_WAYS_SIGN = "<>";
 
     public Rule parse(String line) throws ParseException {
         String[] splitLine = line.split(SPACE);
