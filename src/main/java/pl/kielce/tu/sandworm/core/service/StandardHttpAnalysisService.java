@@ -2,7 +2,7 @@ package pl.kielce.tu.sandworm.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kielce.tu.sandworm.core.analysis.AnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.analysis.RequestData;
 import pl.kielce.tu.sandworm.core.analysis.RuleHeaderMatcher;
 import pl.kielce.tu.sandworm.core.model.Rule;
@@ -22,10 +22,10 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     @Override
-    public AnalysisResult analyze(HttpServletRequest request, String body) {
+    public HttpAnalysisResult analyze(HttpServletRequest request, String body) {
         RequestData requestData = new RequestData(request, body);
         Set<Rule> rulesTriggered = getTriggeredRules(requestData);
-        return new AnalysisResult(requestData, rulesTriggered);
+        return new HttpAnalysisResult(requestData, rulesTriggered);
     }
 
     private Set<Rule> getTriggeredRules(RequestData requestData) {

@@ -1,10 +1,10 @@
 package pl.kielce.tu.sandworm.core.service;
 
-import pl.kielce.tu.sandworm.core.analysis.AnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
 
 import javax.servlet.http.HttpServletRequest;
 
 public interface HttpAnalysisService {
 
-    AnalysisResult analyze(HttpServletRequest request, String body);
+    HttpAnalysisResult analyze(HttpServletRequest request, String body);
 }
