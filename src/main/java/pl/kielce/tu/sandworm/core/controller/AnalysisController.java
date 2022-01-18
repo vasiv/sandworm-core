@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResultHandler;
 import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.ProxyService;
 
@@ -37,6 +38,8 @@ public class AnalysisController {
         if (analysisResult.isDropNeeded()) {
             return getResponseEntityForDroppedRequest();
         }
+        HttpAnalysisResultHandler httpAnalysisResultHandler = new HttpAnalysisResultHandler(analysisResult);
+        httpAnalysisResultHandler.start();
         return proxyService.proxyRequest(body, method, request, response);
     }
 

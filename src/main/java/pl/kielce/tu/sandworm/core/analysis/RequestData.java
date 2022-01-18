@@ -1,24 +1,16 @@
 package pl.kielce.tu.sandworm.core.analysis;
 
-import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletRequest;
 
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.HOST_HEADER_NAME;
+import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 
-@Component
 public class RequestData {
 
-    private static final String SOURCE_ADDRESS_HEADER_NAME = "X-Forwarded-For";
-    private static final String SOURCE_PORT_HEADER_NAME = "X-Forwarded-Port";
-    private String sourceAddress;
-    private String sourcePort;
-    private String destinationAddress;
-    private String destinationPort;
-    private String body;
-
-    public RequestData() {
-    }
+    private final String sourceAddress;
+    private final String sourcePort;
+    private final String destinationAddress;
+    private final String destinationPort;
+    private final String body;
 
     public RequestData(HttpServletRequest request, String body) {
         sourceAddress = request.getHeader(SOURCE_ADDRESS_HEADER_NAME);
