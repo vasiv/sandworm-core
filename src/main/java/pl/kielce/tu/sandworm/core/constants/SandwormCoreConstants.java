@@ -11,5 +11,6 @@ public abstract class SandwormCoreConstants {
     public static final String HOST_HEADER_NAME = "host";
     public static final String ANY = "any";
     public static final String JSON_EXTENSION = ".json";
-    public static final String FILEPATH = "/home/szymon/dev/";
+    public static final String COLON = ":";
+
 }
