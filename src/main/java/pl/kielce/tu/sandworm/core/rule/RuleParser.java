@@ -1,14 +1,22 @@
 package pl.kielce.tu.sandworm.core.rule;
 
-import pl.kielce.tu.sandworm.core.model.Options;
+import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
+import pl.kielce.tu.sandworm.core.model.enumeration.OptionModifier;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
+import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 import static pl.kielce.tu.sandworm.core.model.enumeration.Direction.BOTH_WAYS;
 import static pl.kielce.tu.sandworm.core.model.enumeration.Direction.ONE_WAY;
 
@@ -67,7 +75,47 @@ public class RuleParser {
         return splitLine[index].toUpperCase();
     }
 
-    private Options getOptions(String line) {
-        return new Options();
+    private Set<Option> getOptions(String line) {
+        List<String> optionsSeparated = getOptionsSeparated(line);
+        Set<Option> options = new HashSet<>();
+        for (String element : optionsSeparated) {
+            String[] nameAndMaybeValue = element.split(COLON);
+            if (isNotModifier(nameAndMaybeValue)) {
+                Option e = getOption(optionsSeparated, optionsSeparated.indexOf(element), nameAndMaybeValue);
+                options.add(e);
+            }
+        }
+        return options;
     }
+
+    private Option getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
+        Set<OptionModifier> modifiers = getModifiers(optionsSeparated.subList(currentIndex + 1, optionsSeparated.size()));
+        return new Option(nameAndMaybeValue[0].trim(), nameAndMaybeValue[1].trim(), modifiers);
+    }
+
+    private List<String> getOptionsSeparated(String line) {
+        Matcher m = Pattern.compile(RULE_OPTIONS_REGEX).matcher(line);
+        m.find();
+        String optionsGroup = m.group(1);
+        String[] splitArray = optionsGroup.split(SEMICOLON);
+        return Arrays.asList(splitArray);
+    }
+
+    private boolean isNotModifier(String[] nameAndMaybeValue) {
+        return nameAndMaybeValue.length == 2;
+    }
+
+    private Set<OptionModifier> getModifiers(List<String> optionsGroup) {
+        Set<OptionModifier> modifiers = new HashSet<>();
+        for (String maybeModifier : optionsGroup) {
+            try {
+                OptionModifier optionModifier = OptionModifier.getModifier(maybeModifier.trim());
+                modifiers.add(optionModifier);
+            } catch (IllegalArgumentException e) {
+                break;
+            }
+        }
+        return modifiers;
+    }
+
 }

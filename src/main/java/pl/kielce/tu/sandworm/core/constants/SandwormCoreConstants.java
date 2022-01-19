@@ -12,5 +12,8 @@ public abstract class SandwormCoreConstants {
     public static final String ANY = "any";
     public static final String JSON_EXTENSION = ".json";
     public static final String COLON = ":";
+    public static final String SEMICOLON = ";";
+    public static final String RULE_OPTIONS_REGEX = "\\((.*?)\\)";
+
 
 }

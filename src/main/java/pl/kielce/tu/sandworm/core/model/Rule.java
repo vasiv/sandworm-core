@@ -4,6 +4,8 @@ import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
 
+import java.util.Set;
+
 public class Rule {
 
     private final Action action;
@@ -13,7 +15,7 @@ public class Rule {
     private final Direction direction;
     private final String destinationAddress;
     private final String destinationPort;
-    private final Options options;
+    private final Set<Option> options;
 
     private Rule(RuleBuilder builder) {
         this.action = builder.action;
@@ -77,7 +79,7 @@ public class Rule {
         private final Direction direction;
         private final String destinationAddress;
         private final String destinationPort;
-        private Options options;
+        private Set<Option> options;
 
         public RuleBuilder(Action action, Protocol protocol, String sourceAddress, String sourcePort,
                            Direction direction, String destinationAddress, String destinationPort) {
@@ -90,7 +92,7 @@ public class Rule {
             this.destinationPort = destinationPort;
         }
 
-        public RuleBuilder withOptions(Options options) {
+        public RuleBuilder withOptions(Set<Option> options) {
             this.options = options;
             return this;
         }
