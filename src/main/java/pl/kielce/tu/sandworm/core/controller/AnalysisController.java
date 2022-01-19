@@ -38,10 +38,10 @@ public class AnalysisController {
                                                  HttpServletRequest request, HttpServletResponse response) throws
             URISyntaxException {
         HttpAnalysisResult analysisResult = analysisService.analyze(request, body);
+        analysisResultService.handleResult(analysisResult);
         if (analysisResult.isDropNeeded()) {
             return getResponseEntityForDroppedRequest();
         }
-        analysisResultService.handleResult(analysisResult);
         return proxyService.proxyRequest(body, method, request, response);
     }
 
