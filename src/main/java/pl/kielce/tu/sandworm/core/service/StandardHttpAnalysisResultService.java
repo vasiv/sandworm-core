@@ -3,8 +3,8 @@ package pl.kielce.tu.sandworm.core.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
-import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResultHandler;
+import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResultHandler;
 import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
 
 @Service

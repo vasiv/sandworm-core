@@ -1,9 +1,10 @@
-package pl.kielce.tu.sandworm.core.analysis;
+package pl.kielce.tu.sandworm.core.analysis.result;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.kielce.tu.sandworm.core.model.RequestData;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.TriggeredRule;
 import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;

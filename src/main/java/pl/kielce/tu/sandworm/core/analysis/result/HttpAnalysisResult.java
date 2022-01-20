@@ -1,5 +1,6 @@
-package pl.kielce.tu.sandworm.core.analysis;
+package pl.kielce.tu.sandworm.core.analysis.result;
 
+import pl.kielce.tu.sandworm.core.model.RequestData;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import java.util.Set;

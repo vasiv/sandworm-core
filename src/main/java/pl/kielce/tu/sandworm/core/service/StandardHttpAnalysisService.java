@@ -2,9 +2,9 @@ package pl.kielce.tu.sandworm.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
-import pl.kielce.tu.sandworm.core.analysis.RequestData;
-import pl.kielce.tu.sandworm.core.analysis.RuleMatcher;
+import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
+import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.analysis.matcher.RuleMatcher;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import javax.servlet.http.HttpServletRequest;

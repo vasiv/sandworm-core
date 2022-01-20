@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.service.HttpAnalysisResultService;
 import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.ProxyService;

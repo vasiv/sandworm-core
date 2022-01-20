@@ -2,7 +2,6 @@ package pl.kielce.tu.sandworm.core.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import pl.kielce.tu.sandworm.core.analysis.RequestData;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

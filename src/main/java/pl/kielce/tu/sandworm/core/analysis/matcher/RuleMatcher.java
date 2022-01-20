@@ -1,5 +1,6 @@
-package pl.kielce.tu.sandworm.core.analysis;
+package pl.kielce.tu.sandworm.core.analysis.matcher;
 
+import pl.kielce.tu.sandworm.core.model.RequestData;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 public class RuleMatcher {

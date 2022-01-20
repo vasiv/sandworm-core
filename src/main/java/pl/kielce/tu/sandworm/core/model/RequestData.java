@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.analysis;
+package pl.kielce.tu.sandworm.core.model;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
