@@ -3,6 +3,7 @@ package pl.kielce.tu.sandworm.core.rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.rule.parser.RuleParser;
 
 import java.io.IOException;
 import java.nio.file.Files;

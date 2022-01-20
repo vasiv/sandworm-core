@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.analysis.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.analysis.RequestData;
-import pl.kielce.tu.sandworm.core.analysis.RuleHeaderMatcher;
+import pl.kielce.tu.sandworm.core.analysis.RuleMatcher;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,13 +29,14 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     private Set<Rule> getTriggeredRules(RequestData requestData) {
-        RuleHeaderMatcher headerMatcher = new RuleHeaderMatcher(requestData);
-        return getMatchedRules(headerMatcher);
+        RuleMatcher ruleMatcher = new RuleMatcher(requestData);
+        return getMatchedRules(ruleMatcher);
     }
 
-    private Set<Rule> getMatchedRules(RuleHeaderMatcher headerMatcher) {
+    private Set<Rule> getMatchedRules(RuleMatcher ruleMatcher) {
         return rules.stream()
-                .filter(headerMatcher::doesHeaderMatch)
+                .filter(ruleMatcher::doesHeaderMatch)
+                .filter(ruleMatcher::doOptionsMatch)
                 .collect(Collectors.toSet());
     }
 

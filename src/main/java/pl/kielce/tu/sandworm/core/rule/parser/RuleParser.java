@@ -1,11 +1,11 @@
-package pl.kielce.tu.sandworm.core.rule;
+package pl.kielce.tu.sandworm.core.rule.parser;
 
 import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
-import pl.kielce.tu.sandworm.core.model.enumeration.OptionModifier;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
+import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 import static pl.kielce.tu.sandworm.core.model.enumeration.Direction.BOTH_WAYS;
@@ -31,6 +32,8 @@ public class RuleParser {
     private static final int DESTINATION_PORT_INDEX = 6;
     private static final String ONE_WAY_SIGN = "->";
     private static final String BOTH_WAYS_SIGN = "<>";
+    private final static ModifierParser modifierParser = new ModifierParser();
+    public static final String QUOTE_REGEX = "^\"|\"$";
 
     public Rule parse(String line) throws ParseException {
         String[] splitLine = line.split(SPACE);
@@ -89,8 +92,10 @@ public class RuleParser {
     }
 
     private Option getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
-        Set<OptionModifier> modifiers = getModifiers(optionsSeparated.subList(currentIndex + 1, optionsSeparated.size()));
-        return new Option(nameAndMaybeValue[0].trim(), nameAndMaybeValue[1].trim(), modifiers);
+        Set<Modifier> modifiers = getModifiers(optionsSeparated.subList(currentIndex + 1, optionsSeparated.size()));
+        String optionName = nameAndMaybeValue[0].trim();
+        String optionValue = nameAndMaybeValue[1].trim().replaceAll(QUOTE_REGEX, EMPTY);
+        return new Option(optionName, optionValue, modifiers);
     }
 
     private List<String> getOptionsSeparated(String line) {
@@ -105,12 +110,12 @@ public class RuleParser {
         return nameAndMaybeValue.length == 2;
     }
 
-    private Set<OptionModifier> getModifiers(List<String> optionsGroup) {
-        Set<OptionModifier> modifiers = new HashSet<>();
+    private Set<Modifier> getModifiers(List<String> optionsGroup) {
+        Set<Modifier> modifiers = new HashSet<>();
         for (String maybeModifier : optionsGroup) {
             try {
-                OptionModifier optionModifier = OptionModifier.getModifier(maybeModifier.trim());
-                modifiers.add(optionModifier);
+                Modifier modifier = modifierParser.getModifier(maybeModifier.trim());
+                modifiers.add(modifier);
             } catch (IllegalArgumentException e) {
                 break;
             }

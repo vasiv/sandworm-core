@@ -56,6 +56,10 @@ public class Rule {
         return destinationPort;
     }
 
+    public Set<Option> getOptions() {
+        return options;
+    }
+
     @Override
     public String toString() {
         return "Rule{" +
