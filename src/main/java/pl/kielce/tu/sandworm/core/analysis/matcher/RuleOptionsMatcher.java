@@ -49,6 +49,8 @@ public class RuleOptionsMatcher {
                 return request.getHeadersValues();
             case HTTP_METHOD:
                 return request.getMethod();
+            case HTTP_REQUEST_BODY:
+                return request.getBody();
             default:
                 throw new IllegalArgumentException();
         }
