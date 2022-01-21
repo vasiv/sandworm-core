@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
-import pl.kielce.tu.sandworm.core.service.HttpAnalysisResultService;
 import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.ProxyService;
 
@@ -23,14 +22,11 @@ public class AnalysisController {
 
     private final ProxyService proxyService;
     private final HttpAnalysisService analysisService;
-    private final HttpAnalysisResultService analysisResultService;
 
     @Autowired
-    public AnalysisController(ProxyService proxyService, HttpAnalysisService httpAnalysisService,
-                              HttpAnalysisResultService analysisResultService) {
+    public AnalysisController(ProxyService proxyService, HttpAnalysisService httpAnalysisService) {
         this.proxyService = proxyService;
         this.analysisService = httpAnalysisService;
-        this.analysisResultService = analysisResultService;
     }
 
     @RequestMapping("/**")
@@ -38,7 +34,7 @@ public class AnalysisController {
                                                  HttpServletRequest request, HttpServletResponse response) throws
             URISyntaxException {
         HttpAnalysisResult analysisResult = analysisService.analyze(request, body);
-        analysisResultService.handleResult(analysisResult);
+        analysisService.handleResult(analysisResult);
         if (analysisResult.isDropNeeded()) {
             return getResponseEntityForDroppedRequest();
         }

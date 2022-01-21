@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
 import pl.kielce.tu.sandworm.core.rule.RulesGenerator;
 import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.StandardHttpAnalysisService;
@@ -53,8 +54,9 @@ public class SandwormCoreConfiguration {
     }
 
     @Bean
-    public HttpAnalysisService analysisService() throws URISyntaxException, IOException {
-        return new StandardHttpAnalysisService(getHttpRules());
+    public HttpAnalysisService analysisService(TriggeredRuleRepository triggeredRuleRepository)
+            throws URISyntaxException, IOException {
+        return new StandardHttpAnalysisService(getHttpRules(), triggeredRuleRepository);
     }
 
     private URI getResourceUri(String resourceName) throws URISyntaxException {

@@ -7,4 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface HttpAnalysisService {
 
     HttpAnalysisResult analyze(HttpServletRequest request, String body);
+
+    void handleResult(HttpAnalysisResult analysisResult);
 }
