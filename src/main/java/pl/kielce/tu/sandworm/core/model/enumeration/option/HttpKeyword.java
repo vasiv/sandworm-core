@@ -13,7 +13,11 @@ public enum HttpKeyword implements Modifier {
         this.label = label;
     }
 
-    public String getLabel() {
-        return label;
+    public static HttpKeyword get(String label) {
+        for (HttpKeyword modifier : HttpKeyword.values())
+            if (modifier.label.equalsIgnoreCase(label)) {
+                return modifier;
+            }
+        throw new IllegalArgumentException();
     }
 }

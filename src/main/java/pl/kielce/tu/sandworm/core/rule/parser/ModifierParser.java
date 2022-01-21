@@ -9,17 +9,10 @@ public class ModifierParser {
 
     public Modifier getModifier(String value) {
         if (value.startsWith(HTTP)) {
-            return getHttpKeyword(value);
+            return HttpKeyword.get(value);
         } else {
             throw new IllegalArgumentException();
         }
     }
 
-    private HttpKeyword getHttpKeyword(String label) {
-        for (HttpKeyword modifier : HttpKeyword.values())
-            if (modifier.getLabel().equalsIgnoreCase(label)) {
-                return modifier;
-            }
-        throw new IllegalArgumentException();
-    }
 }
