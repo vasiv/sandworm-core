@@ -26,4 +26,15 @@ public class Threshold {
     private int seconds;
     private int count;
 
+    public ThresholdType getType() {
+        return type;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public int getCount() {
+        return count;
+    }
 }

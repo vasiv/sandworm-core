@@ -28,4 +28,8 @@ public class TriggeredRule {
         return rule;
     }
 
+    public Threshold getThreshold() {
+        return rule.getThreshold();
+    }
+
 }
