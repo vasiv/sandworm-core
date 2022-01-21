@@ -2,18 +2,17 @@ package pl.kielce.tu.sandworm.core.rule.parser;
 
 import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.model.Threshold;
 import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
@@ -32,8 +31,9 @@ public class RuleParser {
     private static final int DESTINATION_PORT_INDEX = 6;
     private static final String ONE_WAY_SIGN = "->";
     private static final String BOTH_WAYS_SIGN = "<>";
-    private final static ModifierParser modifierParser = new ModifierParser();
-    public static final String QUOTE_REGEX = "^\"|\"$";
+    private static final ModifierParser modifierParser = new ModifierParser();
+    private static final String QUOTE_REGEX = "^\"|\"$";
+    private static final String THRESHOLD_PREFIX = "threshold:";
 
     public Rule parse(String line) throws ParseException {
         String[] splitLine = line.split(SPACE);
@@ -46,9 +46,11 @@ public class RuleParser {
         String destinationAddress = getRuleChunk(splitLine, DESTINATION_ADDRESS_INDEX);
         String destinationPort = getRuleChunk(splitLine, DESTINATION_PORT_INDEX);
 
+        List<String> optionsSeparated = getOptionsSeparated(line);
         return new Rule.RuleBuilder(action, protocol, sourceAddress, sourcePort,
                 direction, destinationAddress, destinationPort)
-                .withOptions(getOptions(line))
+                .withOptions(getOptions(optionsSeparated))
+                .withThreshold(getThreshold(optionsSeparated))
                 .build();
     }
 
@@ -78,8 +80,7 @@ public class RuleParser {
         return splitLine[index].toUpperCase();
     }
 
-    private Set<Option> getOptions(String line) {
-        List<String> optionsSeparated = getOptionsSeparated(line);
+    private Set<Option> getOptions(List<String> optionsSeparated) {
         Set<Option> options = new HashSet<>();
         for (String element : optionsSeparated) {
             String[] nameAndMaybeValue = element.split(COLON);
@@ -121,6 +122,29 @@ public class RuleParser {
             }
         }
         return modifiers;
+    }
+
+    private Threshold getThreshold(List<String> optionsSeparated) {
+        return optionsSeparated.stream()
+                .filter(option -> option.trim().startsWith(THRESHOLD_PREFIX))
+                .findFirst()
+                .map(this::getThreshold)
+                .orElse(new Threshold());
+    }
+
+    private Threshold getThreshold(String thresholdOption) {
+        String thresholdSettings = thresholdOption.split(COLON)[1];
+        final Map<String, String> settings = transferToMap(thresholdSettings);
+        return new Threshold(settings);
+    }
+
+    private Map<String, String> transferToMap(String thresholdSettings) {
+        final Map<String, String> map = new HashMap<>();
+        Stream.of(thresholdSettings.split(COMMA))
+                .map(String::trim)
+                .map(setting -> setting.split(SPACE))
+                .forEach(array -> map.put(array[0], array[1]));
+        return map;
     }
 
 }

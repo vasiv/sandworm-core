@@ -15,6 +15,7 @@ public class Rule {
     private final Direction direction;
     private final String destinationAddress;
     private final String destinationPort;
+    private final Threshold threshold;
     private final Set<Option> options;
 
     private Rule(RuleBuilder builder) {
@@ -25,6 +26,7 @@ public class Rule {
         this.direction = builder.direction;
         this.destinationAddress = builder.destinationAddress;
         this.destinationPort = builder.destinationPort;
+        this.threshold = builder.threshold;
         this.options = builder.options;
     }
 
@@ -56,6 +58,10 @@ public class Rule {
         return destinationPort;
     }
 
+    public Threshold getThreshold() {
+        return threshold;
+    }
+
     public Set<Option> getOptions() {
         return options;
     }
@@ -70,6 +76,7 @@ public class Rule {
                 ", direction=" + direction +
                 ", destinationAddress='" + destinationAddress + '\'' +
                 ", destinationPort=" + destinationPort +
+                ", threshold=" + threshold +
                 ", options=" + options +
                 '}';
     }
@@ -83,6 +90,7 @@ public class Rule {
         private final Direction direction;
         private final String destinationAddress;
         private final String destinationPort;
+        private Threshold threshold;
         private Set<Option> options;
 
         public RuleBuilder(Action action, Protocol protocol, String sourceAddress, String sourcePort,
@@ -98,6 +106,11 @@ public class Rule {
 
         public RuleBuilder withOptions(Set<Option> options) {
             this.options = options;
+            return this;
+        }
+
+        public RuleBuilder withThreshold(Threshold threshold) {
+            this.threshold = threshold;
             return this;
         }
 
