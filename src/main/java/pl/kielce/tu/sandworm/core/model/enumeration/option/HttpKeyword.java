@@ -1,5 +1,9 @@
 package pl.kielce.tu.sandworm.core.model.enumeration.option;
 
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.convert.WritingConverter;
+
 public enum HttpKeyword implements Modifier {
 
     HTTP_URI("http.uri"),
@@ -19,5 +23,27 @@ public enum HttpKeyword implements Modifier {
                 return modifier;
             }
         throw new IllegalArgumentException();
+    }
+
+    @WritingConverter
+    public enum ModifierToStringConverter implements Converter<Modifier, String> {
+
+        INSTANCE;
+
+        @Override
+        public String convert(Modifier source) {
+            return ((HttpKeyword) source).label;
+        }
+    }
+
+    @ReadingConverter
+    public enum StringToModifierConverter implements Converter<String, Modifier> {
+
+        INSTANCE;
+
+        @Override
+        public Modifier convert(String source) {
+            return get(source);
+        }
     }
 }

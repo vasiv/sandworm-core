@@ -8,15 +8,15 @@ import java.util.Set;
 
 public class Rule {
 
-    private final Action action;
-    private final Protocol protocol;
-    private final String sourceAddress;
-    private final String sourcePort;
-    private final Direction direction;
-    private final String destinationAddress;
-    private final String destinationPort;
-    private final Threshold threshold;
-    private final Set<Option> options;
+    private Action action;
+    private Protocol protocol;
+    private String sourceAddress;
+    private String sourcePort;
+    private Direction direction;
+    private String destinationAddress;
+    private String destinationPort;
+    private Threshold threshold;
+    private Set<Option> options;
 
     private Rule(RuleBuilder builder) {
         this.action = builder.action;
@@ -28,6 +28,9 @@ public class Rule {
         this.destinationPort = builder.destinationPort;
         this.threshold = builder.threshold;
         this.options = builder.options;
+    }
+
+    public Rule() {
     }
 
     public Action getAction() {

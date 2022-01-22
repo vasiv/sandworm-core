@@ -14,10 +14,12 @@ public class TriggeredRule {
     private String id;
     private final RequestData requestData;
     private final Rule rule;
+    private long triggeredAt;
 
     public TriggeredRule(RequestData requestData, Rule rule) {
         this.requestData = requestData;
         this.rule = rule;
+        triggeredAt = requestData.getCreatedAt();
     }
 
     public RequestData getRequestData() {
@@ -32,4 +34,11 @@ public class TriggeredRule {
         return rule.getThreshold();
     }
 
+    public long getTriggeredAt() {
+        return triggeredAt;
+    }
+
+    public void setTriggeredAt(long triggeredAt) {
+        this.triggeredAt = triggeredAt;
+    }
 }
