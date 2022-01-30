@@ -14,15 +14,15 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 
-public class RulesGenerator {
+public class RulesLoader {
 
-    Logger logger = LoggerFactory.getLogger(RulesGenerator.class);
+    Logger logger = LoggerFactory.getLogger(RulesLoader.class);
 
     private static final String COMMENTED_OUT_PREFIX = "#";
     private final RuleParser parser = new RuleParser();
     private final Path ruleSetPath;
 
-    public RulesGenerator(Path ruleSetPath) {
+    public RulesLoader(Path ruleSetPath) {
         this.ruleSetPath = ruleSetPath;
     }
 

@@ -15,12 +15,12 @@ import java.util.Set;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RulesGeneratorTest {
+class RulesLoaderTest {
 
     @Test
     void shouldThrowExceptionWhenFileUnableToOpen() {
         Path path = Paths.get("notExistingDirectory/notExistingRuleSet.rules");
-        RulesGenerator generator = new RulesGenerator(path);
+        RulesLoader generator = new RulesLoader(path);
 
         Assertions.assertThrows(IOException.class, generator::generate);
     }
@@ -28,7 +28,7 @@ class RulesGeneratorTest {
     @Test
     void shouldReturnEmptyRuleSetWhenNoRulesDefinedInFile() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/emptySet.rules"));
-        RulesGenerator generator = new RulesGenerator(path);
+        RulesLoader generator = new RulesLoader(path);
 
         Set<Rule> rules = generator.generate();
 
@@ -38,7 +38,7 @@ class RulesGeneratorTest {
     @Test
     void shouldReturnDefinedRules() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/twoRulesSet.rules"));
-        RulesGenerator generator = new RulesGenerator(path);
+        RulesLoader generator = new RulesLoader(path);
 
         Set<Rule> rules = generator.generate();
 
@@ -48,7 +48,7 @@ class RulesGeneratorTest {
     @Test
     void shouldSkipCommentedOutLinesInRuleSetFile() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/twoRulesAndOneCommentedOutSet.rules"));
-        RulesGenerator generator = new RulesGenerator(path);
+        RulesLoader generator = new RulesLoader(path);
 
         Set<Rule> rules = generator.generate();
 
