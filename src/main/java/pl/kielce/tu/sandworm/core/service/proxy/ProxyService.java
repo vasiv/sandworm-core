@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.service;
+package pl.kielce.tu.sandworm.core.service.proxy;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

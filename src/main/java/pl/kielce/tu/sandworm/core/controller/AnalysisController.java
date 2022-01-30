@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kielce.tu.sandworm.core.model.RequestData;
-import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
-import pl.kielce.tu.sandworm.core.service.ProxyService;
+import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
+import pl.kielce.tu.sandworm.core.service.proxy.ProxyService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

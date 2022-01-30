@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.service;
+package pl.kielce.tu.sandworm.core.service.analysis;
 
 import pl.kielce.tu.sandworm.core.model.RequestData;
 

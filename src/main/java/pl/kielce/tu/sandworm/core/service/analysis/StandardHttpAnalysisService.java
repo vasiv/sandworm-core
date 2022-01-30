@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.service;
+package pl.kielce.tu.sandworm.core.service.analysis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
