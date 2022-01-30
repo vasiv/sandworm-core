@@ -1,5 +1,6 @@
 package pl.kielce.tu.sandworm.core.rule.parser;
 
+import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
 import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.Threshold;
@@ -8,7 +9,6 @@ import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
-import java.text.ParseException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +35,7 @@ public class RuleParser {
     private static final String QUOTE_REGEX = "^\"|\"$";
     private static final String THRESHOLD_PREFIX = "threshold:";
 
-    public Rule parse(String line) throws ParseException {
+    public Rule parse(String line) throws RuleSyntaxException {
         String[] splitLine = line.split(SPACE);
 
         Action action = getAction(splitLine);
@@ -64,7 +64,7 @@ public class RuleParser {
         return Protocol.valueOf(protocol.toUpperCase());
     }
 
-    private Direction getDirection(String[] splitLine) throws ParseException {
+    private Direction getDirection(String[] splitLine) throws RuleSyntaxException {
         String direction = splitLine[DIRECTION_INDEX];
         switch (direction) {
             case ONE_WAY_SIGN:
@@ -72,7 +72,7 @@ public class RuleParser {
             case BOTH_WAYS_SIGN:
                 return BOTH_WAYS;
             default:
-                throw new ParseException("Cannot parse direction sign - non of expected ones.", 0);
+                throw new RuleSyntaxException("Cannot parse direction sign - non of expected ones.");
         }
     }
 

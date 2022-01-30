@@ -2,13 +2,13 @@ package pl.kielce.tu.sandworm.core.rule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.rule.parser.RuleParser;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.ParseException;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -43,9 +43,8 @@ public class RulesGenerator {
     private Rule parse(String line) {
         try {
             return parser.parse(line);
-        } catch (ParseException e) {
-            logger.error("Cannot generate Rule due to parsing error: ", e);
-            logger.error("Rule skipped: {}", line);
+        } catch (RuleSyntaxException e) {
+            logger.error("Cannot generate Rule due to parsing error: {}. Rule skipped: {}", e, line);
             return null;
         }
     }
