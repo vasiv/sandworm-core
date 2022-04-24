@@ -12,19 +12,19 @@ public class Threshold {
     private static final String SECONDS = "seconds";
     private static final String KEY = "count";
 
-    public Threshold(Map<String, String> settings) {
-        type = ThresholdType.get(settings.get(TYPE));
-        seconds = Integer.parseInt(settings.get(SECONDS));
-        count = Integer.parseInt(settings.get(KEY));
-    }
+    private final ThresholdType type;
+    private int seconds;
+    private int count;
 
     public Threshold() {
         type = NONE;
     }
 
-    private ThresholdType type;
-    private int seconds;
-    private int count;
+    public Threshold(Map<String, String> settings) {
+        type = ThresholdType.get(settings.get(TYPE));
+        seconds = Integer.parseInt(settings.get(SECONDS));
+        count = Integer.parseInt(settings.get(KEY));
+    }
 
     public ThresholdType getType() {
         return type;

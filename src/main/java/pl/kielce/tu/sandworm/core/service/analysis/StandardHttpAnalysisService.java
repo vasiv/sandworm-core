@@ -88,7 +88,7 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     private boolean isDropRule(Rule rule) {
-        return DROP.equals(rule.getAction());
+        return Rule.Action.DROP.equals(rule.getAction());
     }
 
 }

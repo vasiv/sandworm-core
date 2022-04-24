@@ -1,8 +1,10 @@
 package pl.kielce.tu.sandworm.core.rule;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.rule.parser.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,10 +19,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RulesLoaderTest {
 
+    private RuleParser ruleParser;
+
+    @BeforeEach
+    void setUp() {
+        ruleParser = new RuleParser(
+                new ActionParser(),
+                new HeaderParser(),
+                new OptionsParser(new ModifierParser()));
+    }
+
     @Test
     void shouldThrowExceptionWhenFileUnableToOpen() {
         Path path = Paths.get("notExistingDirectory/notExistingRuleSet.rules");
-        RulesLoader generator = new RulesLoader(path);
+        RulesLoader generator = new RulesLoader(path, ruleParser);
 
         Assertions.assertThrows(IOException.class, generator::generate);
     }
@@ -28,7 +40,7 @@ class RulesLoaderTest {
     @Test
     void shouldReturnEmptyRuleSetWhenNoRulesDefinedInFile() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/emptySet.rules"));
-        RulesLoader generator = new RulesLoader(path);
+        RulesLoader generator = new RulesLoader(path, ruleParser);
 
         Set<Rule> rules = generator.generate();
 
@@ -38,7 +50,7 @@ class RulesLoaderTest {
     @Test
     void shouldReturnDefinedRules() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/twoRulesSet.rules"));
-        RulesLoader generator = new RulesLoader(path);
+        RulesLoader generator = new RulesLoader(path, ruleParser);
 
         Set<Rule> rules = generator.generate();
 
@@ -48,7 +60,7 @@ class RulesLoaderTest {
     @Test
     void shouldSkipCommentedOutLinesInRuleSetFile() throws URISyntaxException, IOException {
         Path path = Paths.get(getResourceUri("rules/twoRulesAndOneCommentedOutSet.rules"));
-        RulesLoader generator = new RulesLoader(path);
+        RulesLoader generator = new RulesLoader(path, ruleParser);
 
         Set<Rule> rules = generator.generate();
 

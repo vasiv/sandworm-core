@@ -19,7 +19,7 @@ public class RuleOptionsMatcher {
     public boolean doOptionsMatch(Rule rule) {
         Set<Option> options = rule.getOptions();
         for (Option option : options) {
-            if(CONTENT.equals(option.getName())) {
+            if(CONTENT.equals(option.name())) {
                 if (doesContentNotMatch(option)) {
                     return false;
                 }
@@ -30,11 +30,11 @@ public class RuleOptionsMatcher {
 
     private boolean doesContentNotMatch(Option option) {
         String requestPart = getRequestPart(request, getHttpKeywordModifier(option));
-        return isPatternNotPresent(requestPart, option.getValue());
+        return isPatternNotPresent(requestPart, option.value());
     }
 
     private HttpKeyword getHttpKeywordModifier(Option option) {
-        return (HttpKeyword) option.getModifiers()
+        return (HttpKeyword) option.modifiers()
                 .stream()
                 .filter(HttpKeyword.class::isInstance)
                 .findFirst()
@@ -42,18 +42,12 @@ public class RuleOptionsMatcher {
     }
 
     private String getRequestPart(RequestData request, HttpKeyword modifier) {
-        switch (modifier) {
-            case HTTP_URI:
-                return request.getUri();
-            case HTTP_HEADER:
-                return request.getHeadersValues();
-            case HTTP_METHOD:
-                return request.getMethod();
-            case HTTP_REQUEST_BODY:
-                return request.getBody();
-            default:
-                throw new IllegalArgumentException();
-        }
+        return switch (modifier) {
+            case HTTP_URI -> request.getUri();
+            case HTTP_HEADER -> request.getHeadersValues();
+            case HTTP_METHOD -> request.getMethod();
+            case HTTP_REQUEST_BODY -> request.getBody();
+        };
     }
 
     private boolean isPatternNotPresent(String data, String pattern) {
