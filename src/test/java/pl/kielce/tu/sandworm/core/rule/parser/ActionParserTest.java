@@ -46,7 +46,7 @@ class ActionParserTest {
                 Arguments.of(("none " +
                                 "http any any -> any any " +
                                 "(msg:”Incoming HTTP request.”; sid:00001; rev:1;)").split(SPACE),
-                        Rule.Action.NONE),
+                        Rule.Action.PASS),
                 Arguments.of(("drop " +
                                 "http 192.168.0.13 any -> any any " +
                                 "(msg:”Incoming HTTP request from malicious host.”; sid:00002; rev:1;)").split(SPACE),

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
 import pl.kielce.tu.sandworm.core.rule.RulesLoader;
+import pl.kielce.tu.sandworm.core.rule.parser.*;
 import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.analysis.StandardHttpAnalysisService;
 
@@ -40,7 +41,11 @@ public class SandwormCoreConfiguration {
 
     private Set<Rule> getHttpRules() throws URISyntaxException, IOException {
         Path ruleSetPath = Paths.get(getResourceUri(ruleSetResourceName));
-        RulesLoader rulesLoader = new RulesLoader(ruleSetPath);
+        RuleParser ruleParser = new RuleParser(
+                new ActionParser(),
+                new HeaderParser(),
+                new OptionsParser(new ModifierParser()));
+        RulesLoader rulesLoader = new RulesLoader(ruleSetPath, ruleParser);
         return rulesLoader.generate()
                 .stream()
                 .filter(this::isHttpProtocolUsed)

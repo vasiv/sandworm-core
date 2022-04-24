@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.rule.parser.RuleParser;
+import pl.kielce.tu.sandworm.core.rule.parser.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,14 +16,14 @@ import static java.util.stream.Collectors.toSet;
 
 public class RulesLoader {
 
-    Logger logger = LoggerFactory.getLogger(RulesLoader.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(RulesLoader.class);
     private static final String COMMENTED_OUT_PREFIX = "#";
-    private final RuleParser parser = new RuleParser();
+    private final RuleParser parser;
     private final Path ruleSetPath;
 
-    public RulesLoader(Path ruleSetPath) {
+    public RulesLoader(Path ruleSetPath, RuleParser parser) {
         this.ruleSetPath = ruleSetPath;
+        this.parser = parser;
     }
 
     public Set<Rule> generate() throws IOException {
