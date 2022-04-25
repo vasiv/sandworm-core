@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
-import pl.kielce.tu.sandworm.core.rule.RulesLoader;
-import pl.kielce.tu.sandworm.core.rule.parser.*;
+import pl.kielce.tu.sandworm.core.loader.RulesLoader;
+import pl.kielce.tu.sandworm.core.parser.*;
 import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.analysis.StandardHttpAnalysisService;
 

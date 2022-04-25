@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
 import pl.kielce.tu.sandworm.core.model.Option;

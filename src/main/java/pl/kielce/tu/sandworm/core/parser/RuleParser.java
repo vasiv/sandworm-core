@@ -1,11 +1,9 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
-import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 

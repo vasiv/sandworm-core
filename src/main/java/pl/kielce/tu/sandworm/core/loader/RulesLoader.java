@@ -1,10 +1,10 @@
-package pl.kielce.tu.sandworm.core.rule;
+package pl.kielce.tu.sandworm.core.loader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.rule.parser.*;
+import pl.kielce.tu.sandworm.core.parser.*;
 
 import java.io.IOException;
 import java.nio.file.Files;

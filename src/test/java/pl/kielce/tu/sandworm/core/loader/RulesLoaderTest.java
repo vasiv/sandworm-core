@@ -1,10 +1,10 @@
-package pl.kielce.tu.sandworm.core.rule;
+package pl.kielce.tu.sandworm.core.loader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.rule.parser.*;
+import pl.kielce.tu.sandworm.core.parser.*;
 
 import java.io.IOException;
 import java.net.URI;

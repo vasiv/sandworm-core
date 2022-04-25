@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
