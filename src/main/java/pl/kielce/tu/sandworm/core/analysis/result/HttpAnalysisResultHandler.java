@@ -61,7 +61,7 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
     }
 
     private boolean isActionAlert(Rule rule) {
-        return ALERT.equals(rule.getAction());
+        return Rule.Action.ALERT.equals(rule.getAction());
     }
 
     private void handleAlertAction(TriggeredRule triggeredRule) throws IOException {
@@ -72,8 +72,8 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
 
     private boolean isThresholdReached(TriggeredRule triggeredRule) {
         Threshold threshold = triggeredRule.getThreshold();
-        if (isTypeNone(threshold)) {
-            logger.debug("Threshold type is None. Threshold reached.");
+        if (threshold == null || isTypeNone(threshold)) {
+            logger.debug("Threshold is not defined or type is None. Threshold reached.");
             return true;
         }
         return true;
