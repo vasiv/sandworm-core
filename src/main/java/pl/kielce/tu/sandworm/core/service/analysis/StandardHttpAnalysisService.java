@@ -8,12 +8,10 @@ import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResultHandler;
 import pl.kielce.tu.sandworm.core.model.RequestData;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
+import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static pl.kielce.tu.sandworm.core.model.enumeration.Action.DROP;
 
 public class StandardHttpAnalysisService implements HttpAnalysisService {
 
@@ -21,11 +19,11 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
 
     @Value("${alert.directory}")
     private String alertDirectory;
-    private final TriggeredRuleRepository triggeredRuleRepository;
+    private final ThreatRepository triggeredRuleRepository;
     private final Set<Rule> dropRules;
     private final Set<Rule> nonDropRules;
 
-    public StandardHttpAnalysisService(Set<Rule> rules, TriggeredRuleRepository triggeredRuleRepository) {
+    public StandardHttpAnalysisService(Set<Rule> rules, ThreatRepository triggeredRuleRepository) {
         this.dropRules = getDropRules(rules);
         this.nonDropRules = getNonDropRules(rules);
         this.triggeredRuleRepository = triggeredRuleRepository;

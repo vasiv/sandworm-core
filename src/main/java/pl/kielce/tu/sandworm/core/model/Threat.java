@@ -6,8 +6,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-@Document(indexName = "triggered_rule")
-public class TriggeredRule {
+@Document(indexName = "threat")
+public class Threat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class TriggeredRule {
     private final Rule rule;
     private long triggeredAt;
 
-    public TriggeredRule(RequestData requestData, Rule rule) {
+    public Threat(RequestData requestData, Rule rule) {
         this.requestData = requestData;
         this.rule = rule;
         triggeredAt = requestData.getCreatedAt();
@@ -30,7 +30,7 @@ public class TriggeredRule {
         return rule;
     }
 
-    public Threshold getThreshold() {
+    public Threshold getRuleThreshold() {
         return rule.getThreshold();
     }
 

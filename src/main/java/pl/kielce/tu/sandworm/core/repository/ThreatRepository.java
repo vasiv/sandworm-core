@@ -2,9 +2,9 @@ package pl.kielce.tu.sandworm.core.repository;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
-import pl.kielce.tu.sandworm.core.model.TriggeredRule;
+import pl.kielce.tu.sandworm.core.model.Threat;
 
 @Repository
-public interface TriggeredRuleRepository extends ElasticsearchRepository<TriggeredRule, String> {
+public interface ThreatRepository extends ElasticsearchRepository<Threat, String> {
 
 }

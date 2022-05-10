@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.repository.TriggeredRuleRepository;
+import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 import pl.kielce.tu.sandworm.core.rule.RulesLoader;
 import pl.kielce.tu.sandworm.core.rule.parser.*;
 import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
@@ -29,7 +29,7 @@ public class SandwormCoreConfiguration {
     private String ruleSetResourceName;
 
     @Bean
-    public HttpAnalysisService analysisService(TriggeredRuleRepository triggeredRuleRepository)
+    public HttpAnalysisService analysisService(ThreatRepository triggeredRuleRepository)
             throws URISyntaxException, IOException {
         return new StandardHttpAnalysisService(getHttpRules(), triggeredRuleRepository);
     }
