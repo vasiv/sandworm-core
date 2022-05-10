@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 
-public class RequestData {
+public class HttpRequest {
 
     private String sourceAddress;
     private String sourcePort;
@@ -20,7 +20,7 @@ public class RequestData {
     private String body;
     private long createdAt;
 
-    public RequestData(HttpServletRequest request, String body) {
+    public HttpRequest(HttpServletRequest request, String body) {
         createdAt = System.currentTimeMillis();
         sourceAddress = request.getHeader(SOURCE_ADDRESS_HEADER_NAME);
         sourcePort = request.getHeader(SOURCE_PORT_HEADER_NAME);
@@ -33,7 +33,7 @@ public class RequestData {
         this.body = body;
     }
 
-    public RequestData() {
+    public HttpRequest() {
     }
 
     private void initHeaders(HttpServletRequest request) {

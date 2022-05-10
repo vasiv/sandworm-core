@@ -1,6 +1,6 @@
 package pl.kielce.tu.sandworm.core.analysis.matcher;
 
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 public class RuleMatcher {
@@ -8,9 +8,9 @@ public class RuleMatcher {
     private final RuleHeaderMatcher headerMatcher;
     private final RuleOptionsMatcher optionsMatcher;
 
-    public RuleMatcher(RequestData requestData) {
-        headerMatcher = new RuleHeaderMatcher(requestData);
-        optionsMatcher = new RuleOptionsMatcher(requestData);
+    public RuleMatcher(HttpRequest httpRequest) {
+        headerMatcher = new RuleHeaderMatcher(httpRequest);
+        optionsMatcher = new RuleOptionsMatcher(httpRequest);
     }
 
     public boolean doesHeaderMatch(Rule rule) {

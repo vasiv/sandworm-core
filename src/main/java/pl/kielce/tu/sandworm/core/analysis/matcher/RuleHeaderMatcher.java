@@ -1,15 +1,15 @@
 package pl.kielce.tu.sandworm.core.analysis.matcher;
 
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.ANY;
 
 public class RuleHeaderMatcher {
 
-    private final RequestData request;
+    private final HttpRequest request;
 
-    public RuleHeaderMatcher(RequestData request) {
+    public RuleHeaderMatcher(HttpRequest request) {
         this.request = request;
     }
 

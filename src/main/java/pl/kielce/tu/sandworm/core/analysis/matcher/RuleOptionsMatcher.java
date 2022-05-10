@@ -1,6 +1,6 @@
 package pl.kielce.tu.sandworm.core.analysis.matcher;
 
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Option;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.HttpKeyword;
@@ -10,9 +10,9 @@ import java.util.Set;
 public class RuleOptionsMatcher {
 
     private static final String CONTENT = "content";
-    private final RequestData request;
+    private final HttpRequest request;
 
-    public RuleOptionsMatcher(RequestData request) {
+    public RuleOptionsMatcher(HttpRequest request) {
         this.request = request;
     }
 
@@ -41,7 +41,7 @@ public class RuleOptionsMatcher {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private String getRequestPart(RequestData request, HttpKeyword modifier) {
+    private String getRequestPart(HttpRequest request, HttpKeyword modifier) {
         return switch (modifier) {
             case HTTP_URI -> request.getUri();
             case HTTP_HEADER -> request.getHeadersValues();

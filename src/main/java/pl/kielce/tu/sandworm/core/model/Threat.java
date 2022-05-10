@@ -12,17 +12,17 @@ public class Threat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private final RequestData requestData;
+    private final HttpRequest requestData;
     private final Rule rule;
     private long triggeredAt;
 
-    public Threat(RequestData requestData, Rule rule) {
+    public Threat(HttpRequest requestData, Rule rule) {
         this.requestData = requestData;
         this.rule = rule;
         triggeredAt = requestData.getCreatedAt();
     }
 
-    public RequestData getRequestData() {
+    public HttpRequest getRequestData() {
         return requestData;
     }
 

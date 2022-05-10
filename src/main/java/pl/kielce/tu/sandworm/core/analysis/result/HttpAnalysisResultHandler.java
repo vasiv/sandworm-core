@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.Threshold;
 import pl.kielce.tu.sandworm.core.model.Threat;
@@ -23,7 +23,7 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(HttpAnalysisResultHandler.class);
     private final ThreatRepository triggeredRuleRepository;
     private final Set<Rule> triggeredRules;
-    private final RequestData requestData;
+    private final HttpRequest requestData;
     private final ObjectWriter jsonWriter;
     private final String alertDirectory;
 

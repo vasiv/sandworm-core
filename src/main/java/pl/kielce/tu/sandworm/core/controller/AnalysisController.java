@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
 import pl.kielce.tu.sandworm.core.service.proxy.ProxyService;
 
@@ -33,7 +33,7 @@ public class AnalysisController {
     public ResponseEntity<String> analyzeRequest(@RequestBody(required = false) String body, HttpMethod method,
                                                  HttpServletRequest request, HttpServletResponse response)
             throws URISyntaxException {
-        RequestData requestData = new RequestData(request, body);
+        HttpRequest requestData = new HttpRequest(request, body);
         analysisService.performNonDropAnalysis(requestData);
         boolean isDropNeeded = analysisService.performDropAnalysis(requestData);
         if (isDropNeeded) {

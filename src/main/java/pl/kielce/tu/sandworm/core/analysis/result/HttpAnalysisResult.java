@@ -1,6 +1,6 @@
 package pl.kielce.tu.sandworm.core.analysis.result;
 
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 
 import java.util.Set;
@@ -10,11 +10,11 @@ import static pl.kielce.tu.sandworm.core.model.enumeration.Action.DROP;
 
 public class HttpAnalysisResult {
 
-    private RequestData request;
+    private HttpRequest request;
     private Set<Rule> rulesTriggered;
     private boolean isDropNeeded;
 
-    public HttpAnalysisResult(RequestData request, Set<Rule> rulesTriggered) {
+    public HttpAnalysisResult(HttpRequest request, Set<Rule> rulesTriggered) {
         this.request = request;
         this.rulesTriggered = rulesTriggered;
         isDropNeeded = isDropNeeded(rulesTriggered);
@@ -28,7 +28,7 @@ public class HttpAnalysisResult {
         return rule -> DROP.equals(rule.getAction());
     }
 
-    public RequestData getRequest() {
+    public HttpRequest getRequest() {
         return request;
     }
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import pl.kielce.tu.sandworm.core.analysis.matcher.RuleMatcher;
 import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResultHandler;
-import pl.kielce.tu.sandworm.core.model.RequestData;
+import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 
@@ -30,7 +30,7 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     @Override
-    public void performNonDropAnalysis(RequestData requestData) {
+    public void performNonDropAnalysis(HttpRequest requestData) {
         Runnable runnable = () -> {
             HttpAnalysisResult analysisResult = analyzeRules(requestData, nonDropRules);
             handleResult(analysisResult);
@@ -40,13 +40,13 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     @Override
-    public boolean performDropAnalysis(RequestData requestData) {
+    public boolean performDropAnalysis(HttpRequest requestData) {
         HttpAnalysisResult analysisResult = analyzeRules(requestData, dropRules);
         handleResult(analysisResult);
         return analysisResult.isDropNeeded();
     }
 
-    private HttpAnalysisResult analyzeRules(RequestData requestData, Set<Rule> rules) {
+    private HttpAnalysisResult analyzeRules(HttpRequest requestData, Set<Rule> rules) {
         Set<Rule> rulesTriggered = getTriggeredRules(requestData, rules);
         return new HttpAnalysisResult(requestData, rulesTriggered);
     }
@@ -57,7 +57,7 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
         handler.start();
     }
 
-    private Set<Rule> getTriggeredRules(RequestData requestData, Set<Rule> rules) {
+    private Set<Rule> getTriggeredRules(HttpRequest requestData, Set<Rule> rules) {
         RuleMatcher ruleMatcher = new RuleMatcher(requestData);
         return getMatchedRules(ruleMatcher, rules);
     }
