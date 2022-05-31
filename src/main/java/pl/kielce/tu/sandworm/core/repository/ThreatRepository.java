@@ -7,4 +7,6 @@ import pl.kielce.tu.sandworm.core.model.Threat;
 @Repository
 public interface ThreatRepository extends ElasticsearchRepository<Threat, String> {
 
+    int countThreatsByRuleIdAndTriggeredAtBetween(String ruleId, long start, long end);
+
 }

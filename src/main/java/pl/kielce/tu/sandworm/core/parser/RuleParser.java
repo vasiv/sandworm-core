@@ -1,9 +1,10 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
-import pl.kielce.tu.sandworm.core.model.Option;
+import pl.kielce.tu.sandworm.core.model.Header;
+import pl.kielce.tu.sandworm.core.model.Options;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 
@@ -31,9 +32,9 @@ public class RuleParser {
 
     private Rule parseToRule(String rule) throws RuleSyntaxException {
         String[] splitRule = rule.split(SPACE);
-        Rule.Action action = actionParser.parse(splitRule);
-        Rule.Header header = headerParser.parse(splitRule);
-        Rule.Options options = optionsParser.parse(rule);
+        Action action = actionParser.parse(splitRule);
+        Header header = headerParser.parse(splitRule);
+        Options options = optionsParser.parse(rule);
         return new Rule(action, header, options);
     }
 

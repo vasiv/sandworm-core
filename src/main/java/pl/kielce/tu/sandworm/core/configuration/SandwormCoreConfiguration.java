@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
-import pl.kielce.tu.sandworm.core.rule.RulesLoader;
-import pl.kielce.tu.sandworm.core.rule.parser.*;
-import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
-import pl.kielce.tu.sandworm.core.service.analysis.StandardHttpAnalysisService;
+import pl.kielce.tu.sandworm.core.loader.RulesLoader;
+import pl.kielce.tu.sandworm.core.parser.*;
+import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +19,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static pl.kielce.tu.sandworm.core.model.enumeration.Protocol.HTTP;
 
 @Configuration
 public class SandwormCoreConfiguration {
@@ -31,7 +29,7 @@ public class SandwormCoreConfiguration {
     @Bean
     public HttpAnalysisService analysisService(ThreatRepository triggeredRuleRepository)
             throws URISyntaxException, IOException {
-        return new StandardHttpAnalysisService(getHttpRules(), triggeredRuleRepository);
+        return new HttpAnalysisService(getHttpRules(), triggeredRuleRepository);
     }
 
     private URI getResourceUri(String resourceName) throws URISyntaxException {
@@ -53,6 +51,7 @@ public class SandwormCoreConfiguration {
     }
 
     private boolean isHttpProtocolUsed(Rule rule) {
-        return HTTP.equals(rule.getProtocol());
+//        return HTTP.equals(rule.getProtocol());
+        return true;
     }
 }

@@ -13,12 +13,11 @@ import pl.kielce.tu.sandworm.core.model.enumeration.option.HttpKeyword;
 
 import java.util.Arrays;
 
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.COLON;
-
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "pl.kielce.tu.sandworm.core.repository")
 public class ElasticsearchConfiguration extends AbstractElasticsearchConfiguration {
 
+    private static final String COLON = ":";
     @Value("${elasticsearch.host}")
     private String elasticsearchHost;
     @Value("${elasticsearch.port}")

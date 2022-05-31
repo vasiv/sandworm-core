@@ -1,9 +1,9 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.kielce.tu.sandworm.core.model.Option;
-import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.model.Options;
+import pl.kielce.tu.sandworm.core.model.PayloadPattern;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
 import java.util.*;
@@ -11,11 +11,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 
 public class OptionsParser {
 
     private static final Logger logger = LoggerFactory.getLogger(OptionsParser.class);
+    private static final String RULE_OPTIONS_REGEX = "\\((.*?)\\)";
+    private static final String SEMICOLON = ";";
+    private static final String COLON = ":";
     private static final String QUOTE_REGEX = "^\"|\"$";
     private final ModifierParser modifierParser;
 
@@ -23,18 +25,18 @@ public class OptionsParser {
         this.modifierParser = modifierParser;
     }
 
-    public Rule.Options parse(String rule) {
+    public Options parse(String rule) {
         List<String> optionsSeparated = getOptionsSeparated(rule);
-        Set<Option> options = getOptions(optionsSeparated);
-        return new Rule.Options(options);
+        Set<PayloadPattern> options = getOptions(optionsSeparated);
+        return new Options(options);
     }
 
-    private Set<Option> getOptions(List<String> optionsSeparated) {
-        Set<Option> options = new HashSet<>();
+    private Set<PayloadPattern> getOptions(List<String> optionsSeparated) {
+        Set<PayloadPattern> options = new HashSet<>();
         for (String element : optionsSeparated) {
             String[] nameAndMaybeValue = element.split(COLON);
             if (isNotModifier(nameAndMaybeValue)) {
-                Option e = getOption(optionsSeparated, optionsSeparated.indexOf(element), nameAndMaybeValue);
+                PayloadPattern e = getOption(optionsSeparated, optionsSeparated.indexOf(element), nameAndMaybeValue);
                 options.add(e);
             }
         }
@@ -59,11 +61,11 @@ public class OptionsParser {
     }
 
 
-    private Option getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
+    private PayloadPattern getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
         Set<Modifier> modifiers = getModifiers(optionsSeparated.subList(currentIndex + 1, optionsSeparated.size()));
         String optionName = nameAndMaybeValue[0].trim();
         String optionValue = nameAndMaybeValue[1].trim().replaceAll(QUOTE_REGEX, EMPTY);
-        return new Option(optionName, optionValue, modifiers);
+        return new PayloadPattern(optionName, optionValue, modifiers);
     }
 
     private boolean isNotModifier(String[] nameAndMaybeValue) {

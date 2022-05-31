@@ -31,7 +31,7 @@ public class Threat {
     }
 
     public Threshold getRuleThreshold() {
-        return rule.getThreshold();
+        return null;
     }
 
     public long getTriggeredAt() {

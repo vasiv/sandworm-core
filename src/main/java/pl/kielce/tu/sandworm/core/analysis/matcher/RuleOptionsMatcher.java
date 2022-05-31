@@ -1,11 +1,9 @@
 package pl.kielce.tu.sandworm.core.analysis.matcher;
 
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
-import pl.kielce.tu.sandworm.core.model.Option;
+import pl.kielce.tu.sandworm.core.model.PayloadPattern;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.HttpKeyword;
-
-import java.util.Set;
 
 public class RuleOptionsMatcher {
 
@@ -17,24 +15,24 @@ public class RuleOptionsMatcher {
     }
 
     public boolean doOptionsMatch(Rule rule) {
-        Set<Option> options = rule.getOptions();
-        for (Option option : options) {
-            if(CONTENT.equals(option.name())) {
-                if (doesContentNotMatch(option)) {
-                    return false;
-                }
-            }
-        }
+//        Set<Option> options = rule.getOptions();
+//        for (Option option : options) {
+//            if(CONTENT.equals(option.name())) {
+//                if (doesContentNotMatch(option)) {
+//                    return false;
+//                }
+//            }
+//        }
         return true;
     }
 
-    private boolean doesContentNotMatch(Option option) {
-        String requestPart = getRequestPart(request, getHttpKeywordModifier(option));
-        return isPatternNotPresent(requestPart, option.value());
+    private boolean doesContentNotMatch(PayloadPattern payloadPattern) {
+        String requestPart = getRequestPart(request, getHttpKeywordModifier(payloadPattern));
+        return isPatternNotPresent(requestPart, payloadPattern.value());
     }
 
-    private HttpKeyword getHttpKeywordModifier(Option option) {
-        return (HttpKeyword) option.modifiers()
+    private HttpKeyword getHttpKeywordModifier(PayloadPattern payloadPattern) {
+        return (HttpKeyword) payloadPattern.modifiers()
                 .stream()
                 .filter(HttpKeyword.class::isInstance)
                 .findFirst()

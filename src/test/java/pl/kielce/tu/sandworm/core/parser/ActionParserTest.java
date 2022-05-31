@@ -1,12 +1,13 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
-import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 
 import java.util.stream.Stream;
 
@@ -25,8 +26,8 @@ class ActionParserTest {
 
     @ParameterizedTest
     @MethodSource("rulesWithActions")
-    void shouldSetCorrectActionWhenParsing(String[] rule, Rule.Action expectedAction) throws RuleSyntaxException {
-        Rule.Action action = parser.parse(rule);
+    void shouldSetCorrectActionWhenParsing(String[] rule, Action expectedAction) throws RuleSyntaxException {
+        Action action = parser.parse(rule);
 
         assertEquals(expectedAction, action);
     }
@@ -46,14 +47,14 @@ class ActionParserTest {
                 Arguments.of(("none " +
                                 "http any any -> any any " +
                                 "(msg:”Incoming HTTP request.”; sid:00001; rev:1;)").split(SPACE),
-                        Rule.Action.PASS),
+                        Action.PASS),
                 Arguments.of(("drop " +
                                 "http 192.168.0.13 any -> any any " +
                                 "(msg:”Incoming HTTP request from malicious host.”; sid:00002; rev:1;)").split(SPACE),
-                        Rule.Action.DROP),
+                        Action.DROP),
                 Arguments.of(("alert http 192.168.0.15 any -> any any " +
                                 "(msg:”Incoming HTTP request from malicious host.”; sid:00003; rev:1;)").split(SPACE),
-                        Rule.Action.ALERT)
+                        Action.ALERT)
         );
     }
 

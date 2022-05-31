@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.service.analysis;
+package pl.kielce.tu.sandworm.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,14 +8,15 @@ import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
 import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResultHandler;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class StandardHttpAnalysisService implements HttpAnalysisService {
+public class HttpAnalysisService {
 
-    Logger logger = LoggerFactory.getLogger(StandardHttpAnalysisService.class);
+    Logger logger = LoggerFactory.getLogger(HttpAnalysisService.class);
 
     @Value("${alert.directory}")
     private String alertDirectory;
@@ -23,13 +24,12 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     private final Set<Rule> dropRules;
     private final Set<Rule> nonDropRules;
 
-    public StandardHttpAnalysisService(Set<Rule> rules, ThreatRepository triggeredRuleRepository) {
+    public HttpAnalysisService(Set<Rule> rules, ThreatRepository triggeredRuleRepository) {
         this.dropRules = getDropRules(rules);
         this.nonDropRules = getNonDropRules(rules);
         this.triggeredRuleRepository = triggeredRuleRepository;
     }
 
-    @Override
     public void performNonDropAnalysis(HttpRequest requestData) {
         Runnable runnable = () -> {
             HttpAnalysisResult analysisResult = analyzeRules(requestData, nonDropRules);
@@ -39,7 +39,6 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
         thread.start();
     }
 
-    @Override
     public boolean performDropAnalysis(HttpRequest requestData) {
         HttpAnalysisResult analysisResult = analyzeRules(requestData, dropRules);
         handleResult(analysisResult);
@@ -86,7 +85,7 @@ public class StandardHttpAnalysisService implements HttpAnalysisService {
     }
 
     private boolean isDropRule(Rule rule) {
-        return Rule.Action.DROP.equals(rule.getAction());
+        return Action.DROP.equals(rule.getAction());
     }
 
 }

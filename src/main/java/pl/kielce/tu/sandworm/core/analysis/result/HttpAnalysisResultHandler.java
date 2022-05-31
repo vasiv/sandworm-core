@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
-import pl.kielce.tu.sandworm.core.model.Threshold;
 import pl.kielce.tu.sandworm.core.model.Threat;
+import pl.kielce.tu.sandworm.core.model.Threshold;
 import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 
 import java.io.File;
@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.JSON_EXTENSION;
 import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.NONE;
 
 public class HttpAnalysisResultHandler extends Thread implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpAnalysisResultHandler.class);
+    private static final String JSON_EXTENSION = ".json";
     private final ThreatRepository triggeredRuleRepository;
     private final Set<Rule> triggeredRules;
     private final HttpRequest requestData;
@@ -60,7 +60,8 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
     }
 
     private boolean isActionAlert(Rule rule) {
-        return Rule.Action.ALERT.equals(rule.getAction());
+//        return Rule.Action.ALERT.equals(rule.getAction());
+        return true;
     }
 
     private void handleAlertAction(Threat threat) throws IOException {

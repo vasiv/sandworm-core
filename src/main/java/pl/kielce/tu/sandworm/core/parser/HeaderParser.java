@@ -1,9 +1,9 @@
-package pl.kielce.tu.sandworm.core.rule.parser;
+package pl.kielce.tu.sandworm.core.parser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.exception.RuleSyntaxException;
-import pl.kielce.tu.sandworm.core.model.Rule;
+import pl.kielce.tu.sandworm.core.model.Header;
 import pl.kielce.tu.sandworm.core.model.enumeration.Direction;
 import pl.kielce.tu.sandworm.core.model.enumeration.Protocol;
 
@@ -22,15 +22,15 @@ public class HeaderParser {
     private static final String ONE_WAY_SIGN = "->";
     private static final String BOTH_WAYS_SIGN = "<>";
 
-    public Rule.Header parse(String[] splitRule) throws RuleSyntaxException {
-        Rule.Header header;
+    public Header parse(String[] splitRule) throws RuleSyntaxException {
+        Header header;
         header = getHeader(splitRule);
         logger.debug("For {} parsed Header is: {}", splitRule, header);
         return header;
     }
 
-    private Rule.Header getHeader(String[] splitRule) throws RuleSyntaxException {
-        return new Rule.Header.Builder()
+    private Header getHeader(String[] splitRule) throws RuleSyntaxException {
+        return new Header.Builder()
                 .withProtocol(getProtocol(splitRule))
                 .withSourceAddress(getRuleChunk(splitRule, SOURCE_ADDRESS_INDEX))
                 .withSourcePort(getRuleChunk(splitRule, SOURCE_PORT_INDEX))

@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
-import pl.kielce.tu.sandworm.core.service.analysis.HttpAnalysisService;
-import pl.kielce.tu.sandworm.core.service.proxy.ProxyService;
+import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
+import pl.kielce.tu.sandworm.core.service.ProxyService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.REQUEST_DROPPED_RESPONSE_MESSAGE;
 
 @RestController
 public class AnalysisController {
 
+    private static final String REQUEST_DROPPED_RESPONSE_MESSAGE = "Request has been dropped due to security violation.";
     private final ProxyService proxyService;
     private final HttpAnalysisService analysisService;
 

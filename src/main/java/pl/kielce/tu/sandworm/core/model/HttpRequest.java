@@ -6,19 +6,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
-import static pl.kielce.tu.sandworm.core.constants.SandwormCoreConstants.*;
 
 public class HttpRequest {
 
-    private String sourceAddress;
-    private String sourcePort;
-    private String destinationAddress;
-    private String destinationPort;
-    private String uri;
-    private Map<String, String> headers;
-    private String method;
-    private String body;
-    private long createdAt;
+    private static final String SOURCE_ADDRESS_HEADER_NAME = "X-Forwarded-For";
+    private static final String SOURCE_PORT_HEADER_NAME = "X-Forwarded-Port";
+    private static final String HOST_HEADER_NAME = "host";
+    private final String sourceAddress;
+    private final String sourcePort;
+    private final String destinationAddress;
+    private final String destinationPort;
+    private final String uri;
+    private final Map<String, String> headers;
+    private final String method;
+    private final String body;
+    private final long createdAt;
 
     public HttpRequest(HttpServletRequest request, String body) {
         createdAt = System.currentTimeMillis();
@@ -31,9 +33,6 @@ public class HttpRequest {
         initHeaders(request);
         method = request.getMethod();
         this.body = body;
-    }
-
-    public HttpRequest() {
     }
 
     private void initHeaders(HttpServletRequest request) {

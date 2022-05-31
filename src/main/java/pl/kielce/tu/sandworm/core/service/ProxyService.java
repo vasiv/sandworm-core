@@ -1,4 +1,4 @@
-package pl.kielce.tu.sandworm.core.service.proxy;
+package pl.kielce.tu.sandworm.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ import static org.apache.http.HttpHost.DEFAULT_SCHEME_NAME;
 import static org.springframework.http.HttpHeaders.ACCEPT_ENCODING;
 
 @Service
-public class StandardProxyService implements ProxyService {
+public class ProxyService {
 
-    private static final Logger logger = LoggerFactory.getLogger(StandardProxyService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProxyService.class);
 
     @Value("${service.proxyService.domain}")
     private String domain;
@@ -35,7 +35,6 @@ public class StandardProxyService implements ProxyService {
     @Value("${service.proxyService.port}")
     private int port;
 
-    @Override
     public ResponseEntity<String> proxyRequest(String body, HttpMethod method, HttpServletRequest request,
                                                HttpServletResponse response) throws URISyntaxException {
         URI uri = generateDestinationUri(request);
