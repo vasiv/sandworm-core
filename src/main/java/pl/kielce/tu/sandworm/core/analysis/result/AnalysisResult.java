@@ -10,14 +10,14 @@ import static pl.kielce.tu.sandworm.core.model.enumeration.Action.DROP;
 
 public class AnalysisResult {
 
-    private HttpRequest request;
-    private Set<Rule> rulesTriggered;
-    private boolean isDropNeeded;
+    private final HttpRequest request;
+    private final Set<Rule> triggeredRules;
+    private final boolean isDropNeeded;
 
-    public AnalysisResult(HttpRequest request, Set<Rule> rulesTriggered) {
+    public AnalysisResult(HttpRequest request, Set<Rule> triggeredRules) {
         this.request = request;
-        this.rulesTriggered = rulesTriggered;
-        isDropNeeded = isDropNeeded(rulesTriggered);
+        this.triggeredRules = triggeredRules;
+        isDropNeeded = isDropNeeded(triggeredRules);
     }
 
     private boolean isDropNeeded(Set<Rule> rulesTriggered) {
@@ -32,8 +32,8 @@ public class AnalysisResult {
         return request;
     }
 
-    public Set<Rule> getRulesTriggered() {
-        return rulesTriggered;
+    public Set<Rule> getTriggeredRules() {
+        return triggeredRules;
     }
 
     public boolean isDropNeeded() {

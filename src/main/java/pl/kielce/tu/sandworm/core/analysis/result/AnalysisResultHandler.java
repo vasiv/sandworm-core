@@ -31,7 +31,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
                                  ThreatRepository threatRepository, String alertDirectory) {
         this.triggeredRuleRepository = threatRepository;
         this.alertDirectory = alertDirectory;
-        triggeredRules = analysisResult.getRulesTriggered();
+        triggeredRules = analysisResult.getTriggeredRules();
         requestData = analysisResult.getRequest();
         jsonWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
     }
