@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
-import pl.kielce.tu.sandworm.core.service.HttpAnalysisService;
+import pl.kielce.tu.sandworm.core.service.AnalysisService;
 import pl.kielce.tu.sandworm.core.service.ProxyService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +21,12 @@ public class AnalysisController {
 
     private static final String REQUEST_DROPPED_RESPONSE_MESSAGE = "Request has been dropped due to security violation.";
     private final ProxyService proxyService;
-    private final HttpAnalysisService analysisService;
+    private final AnalysisService analysisService;
 
     @Autowired
-    public AnalysisController(ProxyService proxyService, HttpAnalysisService httpAnalysisService) {
+    public AnalysisController(ProxyService proxyService, AnalysisService analysisService) {
         this.proxyService = proxyService;
-        this.analysisService = httpAnalysisService;
+        this.analysisService = analysisService;
     }
 
     @RequestMapping("/**")

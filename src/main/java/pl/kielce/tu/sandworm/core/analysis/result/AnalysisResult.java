@@ -8,13 +8,13 @@ import java.util.function.Predicate;
 
 import static pl.kielce.tu.sandworm.core.model.enumeration.Action.DROP;
 
-public class HttpAnalysisResult {
+public class AnalysisResult {
 
     private HttpRequest request;
     private Set<Rule> rulesTriggered;
     private boolean isDropNeeded;
 
-    public HttpAnalysisResult(HttpRequest request, Set<Rule> rulesTriggered) {
+    public AnalysisResult(HttpRequest request, Set<Rule> rulesTriggered) {
         this.request = request;
         this.rulesTriggered = rulesTriggered;
         isDropNeeded = isDropNeeded(rulesTriggered);

@@ -17,9 +17,9 @@ import java.util.Set;
 
 import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.PASS;
 
-public class HttpAnalysisResultHandler extends Thread implements Runnable {
+public class AnalysisResultHandler extends Thread implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpAnalysisResultHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(AnalysisResultHandler.class);
     private static final String JSON_EXTENSION = ".json";
     private final ThreatRepository triggeredRuleRepository;
     private final Set<Rule> triggeredRules;
@@ -27,8 +27,8 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
     private final ObjectWriter jsonWriter;
     private final String alertDirectory;
 
-    public HttpAnalysisResultHandler(HttpAnalysisResult analysisResult,
-                                     ThreatRepository threatRepository, String alertDirectory) {
+    public AnalysisResultHandler(AnalysisResult analysisResult,
+                                 ThreatRepository threatRepository, String alertDirectory) {
         this.triggeredRuleRepository = threatRepository;
         this.alertDirectory = alertDirectory;
         triggeredRules = analysisResult.getRulesTriggered();

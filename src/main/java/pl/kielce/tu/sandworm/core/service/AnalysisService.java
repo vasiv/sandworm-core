@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import pl.kielce.tu.sandworm.core.analysis.matcher.RuleMatcher;
-import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResult;
-import pl.kielce.tu.sandworm.core.analysis.result.HttpAnalysisResultHandler;
+import pl.kielce.tu.sandworm.core.analysis.result.AnalysisResult;
+import pl.kielce.tu.sandworm.core.analysis.result.AnalysisResultHandler;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.Action;
@@ -14,25 +14,25 @@ import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HttpAnalysisService {
+public class AnalysisService {
 
-    Logger logger = LoggerFactory.getLogger(HttpAnalysisService.class);
+    Logger logger = LoggerFactory.getLogger(AnalysisService.class);
 
     @Value("${alert.directory}")
     private String alertDirectory;
-    private final ThreatRepository triggeredRuleRepository;
+    private final ThreatRepository threatRepository;
     private final Set<Rule> dropRules;
     private final Set<Rule> nonDropRules;
 
-    public HttpAnalysisService(Set<Rule> rules, ThreatRepository triggeredRuleRepository) {
+    public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository) {
         this.dropRules = getDropRules(rules);
         this.nonDropRules = getNonDropRules(rules);
-        this.triggeredRuleRepository = triggeredRuleRepository;
+        this.threatRepository = threatRepository;
     }
 
     public void performNonDropAnalysis(HttpRequest requestData) {
         Runnable runnable = () -> {
-            HttpAnalysisResult analysisResult = analyzeRules(requestData, nonDropRules);
+            AnalysisResult analysisResult = analyzeRules(requestData, nonDropRules);
             handleResult(analysisResult);
         };
         Thread thread = new Thread(runnable);
@@ -40,19 +40,18 @@ public class HttpAnalysisService {
     }
 
     public boolean performDropAnalysis(HttpRequest requestData) {
-        HttpAnalysisResult analysisResult = analyzeRules(requestData, dropRules);
+        AnalysisResult analysisResult = analyzeRules(requestData, dropRules);
         handleResult(analysisResult);
         return analysisResult.isDropNeeded();
     }
 
-    private HttpAnalysisResult analyzeRules(HttpRequest requestData, Set<Rule> rules) {
+    private AnalysisResult analyzeRules(HttpRequest requestData, Set<Rule> rules) {
         Set<Rule> rulesTriggered = getTriggeredRules(requestData, rules);
-        return new HttpAnalysisResult(requestData, rulesTriggered);
+        return new AnalysisResult(requestData, rulesTriggered);
     }
 
-    private void handleResult(HttpAnalysisResult analysisResult) {
-        HttpAnalysisResultHandler handler =
-                new HttpAnalysisResultHandler(analysisResult, triggeredRuleRepository, alertDirectory);
+    private void handleResult(AnalysisResult analysisResult) {
+        AnalysisResultHandler handler = new AnalysisResultHandler(analysisResult, threatRepository, alertDirectory);
         handler.start();
     }
 
