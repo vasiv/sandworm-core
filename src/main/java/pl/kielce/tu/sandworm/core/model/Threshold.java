@@ -1,12 +1,11 @@
 package pl.kielce.tu.sandworm.core.model;
 
-import org.springframework.data.elasticsearch.annotations.Document;
 import pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType;
 
 import java.util.Map;
 import java.util.Objects;
 
-import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.NONE;
+import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.PASS;
 
 public class Threshold {
 
@@ -25,7 +24,7 @@ public class Threshold {
     }
 
     public Threshold() {
-        type = NONE;
+        type = PASS;
     }
 
     public Threshold(Map<String, String> settings) {

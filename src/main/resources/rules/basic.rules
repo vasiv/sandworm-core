@@ -1,4 +1,4 @@
-none http any any -> any any (msg:”Incoming HTTP request.”; sid:00001; rev:1;)
+pass http any any -> any any (msg:”Incoming HTTP request.”; sid:00001; rev:1;)
 drop http 192.168.0.13 any -> any any (msg:”Incoming HTTP request from malicious host.”; sid:00002; rev:1;)
 alert http 192.168.0.15 any -> any any (msg:”Incoming HTTP request from malicious host.”; sid:00003; rev:1;)
 alert http any any -> any any (msg:”Hello request.”; content:"/hello"; http.uri; sid:00004; rev:1;)

@@ -2,7 +2,7 @@ package pl.kielce.tu.sandworm.core.model.enumeration;
 
 public enum ThresholdType {
 
-    NONE("none"),
+    PASS("pass"),
     THRESHOLD("threshold"),
     LIMIT("limit");
 

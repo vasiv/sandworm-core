@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.NONE;
+import static pl.kielce.tu.sandworm.core.model.enumeration.ThresholdType.PASS;
 
 public class HttpAnalysisResultHandler extends Thread implements Runnable {
 
@@ -72,15 +72,15 @@ public class HttpAnalysisResultHandler extends Thread implements Runnable {
 
     private boolean isThresholdReached(Threat threat) {
         Threshold threshold = threat.getRuleThreshold();
-        if (threshold == null || isTypeNone(threshold)) {
-            logger.debug("Threshold is not defined or type is None. Threshold reached.");
+        if (threshold == null || isTypePass(threshold)) {
+            logger.debug("Threshold is not defined or type is Pass. Threshold reached.");
             return true;
         }
         return true;
     }
 
-    private boolean isTypeNone(Threshold threshold) {
-        return NONE.equals(threshold.getType());
+    private boolean isTypePass(Threshold threshold) {
+        return PASS.equals(threshold.getType());
     }
 
     private void saveAlertAsJson(Threat alert) throws IOException {

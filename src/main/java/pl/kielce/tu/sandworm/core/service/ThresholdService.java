@@ -21,7 +21,7 @@ public class ThresholdService {
     public boolean isThresholdReached(Threat threat) {
         Threshold threshold = threat.getRuleThreshold();
         switch (threshold.getType()) {
-            case NONE -> {
+            case PASS -> {
                 logger.debug("Threshold Type is None. Threshold reached.");
                 return true;
             }
