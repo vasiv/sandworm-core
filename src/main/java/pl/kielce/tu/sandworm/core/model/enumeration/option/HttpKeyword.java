@@ -9,7 +9,8 @@ public enum HttpKeyword implements Modifier {
     HTTP_URI("http.uri"),
     HTTP_METHOD("http.method"),
     HTTP_HEADER("http.header"),
-    HTTP_REQUEST_BODY("http.request_body");
+    HTTP_REQUEST_BODY("http.request_body"),
+    EMPTY("");
 
     private final String label;
 
@@ -46,4 +47,4 @@ public enum HttpKeyword implements Modifier {
             return get(source);
         }
     }
-}
+    }

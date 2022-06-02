@@ -5,6 +5,8 @@ import pl.kielce.tu.sandworm.core.model.Pattern;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.HttpKeyword;
 
+import static pl.kielce.tu.sandworm.core.model.enumeration.option.HttpKeyword.EMPTY;
+
 public class PatternMatcher {
 
     private static final String CONTENT = "content";
@@ -14,7 +16,7 @@ public class PatternMatcher {
         this.request = request;
     }
 
-    public boolean doOptionsMatch(Rule rule) {
+    public boolean doPatternsMatch(Rule rule) {
         for (Pattern pattern : rule.getPatterns()) {
             if (CONTENT.equals(pattern.name()) && isPatternNotMatched(pattern)) {
                 return false;
@@ -28,21 +30,26 @@ public class PatternMatcher {
         return isPatternNotPresent(requestPart, pattern.value());
     }
 
-    private HttpKeyword getHttpKeywordModifier(Pattern pattern) {
-        return (HttpKeyword) pattern.modifiers()
-                .stream()
-                .filter(HttpKeyword.class::isInstance)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
     private String getRequestPart(HttpRequest request, HttpKeyword modifier) {
         return switch (modifier) {
             case HTTP_URI -> request.getUri();
             case HTTP_HEADER -> request.getHeadersValues();
             case HTTP_METHOD -> request.getMethod();
             case HTTP_REQUEST_BODY -> request.getBody();
+            case EMPTY -> getAllRequestParts(request);
         };
+    }
+
+    private String getAllRequestParts(HttpRequest request) {
+        return request.getUri() + request.getHeadersValues() + request.getMethod() + request.getBody();
+    }
+
+    private HttpKeyword getHttpKeywordModifier(Pattern pattern) {
+        return (HttpKeyword) pattern.modifiers()
+                .stream()
+                .filter(HttpKeyword.class::isInstance)
+                .findFirst()
+                .orElse(EMPTY);
     }
 
     private boolean isPatternNotPresent(String data, String pattern) {
