@@ -3,3 +3,5 @@ drop http 192.168.0.13 any -> any any (msg:”Incoming HTTP request from malicio
 alert http 192.168.0.15 any -> any any (msg:”Incoming HTTP request from malicious host.”; sid:00003; rev:1;)
 alert http any any -> any any (msg:”Hello request.”; content:"/hello"; http.uri; sid:00004; rev:1;)
 alert http any any -> any any (msg:”Bye request.”; content:"/bye"; http.uri; threshold: type threshold, seconds 60, count 5; sid:00005; rev:1;)
+alert http any any -> any any (msg:”szymix.”; content:"/bye"; threshold: type threshold, seconds 60, count 5; sid:00005; rev:1;)
+alert http any any -> any any (msg:”szymix2.”; content:"/bye"; content:"/hello"; http.uri; threshold: type threshold, seconds 60, count 5; sid:00005; rev:1;)

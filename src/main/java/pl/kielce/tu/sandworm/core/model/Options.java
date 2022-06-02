@@ -21,18 +21,18 @@ public class Options {
     private int revision;
     private String message;
     private Threshold threshold;
-    private Set<PayloadPattern> payloadMatchers;
+    private Set<Pattern> patterns;
 
 
-    public Options(Set<PayloadPattern> options) {
-        this.payloadMatchers = new HashSet<>();
+    public Options(Set<Pattern> options) {
+        this.patterns = new HashSet<>();
         options.forEach(option -> {
             switch (option.name()) {
                 case SID -> id = option.value();
                 case REV -> revision = Integer.parseInt(option.value());
                 case MSG -> message = option.value();
                 case THRESHOLD -> threshold = getThreshold(option.value());
-                case CONTENT -> payloadMatchers.add(option);
+                case CONTENT -> patterns.add(option);
                 default -> throw new IllegalStateException("Unexpected value: " + option.name());
                 //todo maybe throw custom one
             }
@@ -69,7 +69,7 @@ public class Options {
         return threshold;
     }
 
-    public Set<PayloadPattern> getPayloadMatchers() {
-        return payloadMatchers;
+    public Set<Pattern> getPatterns() {
+        return patterns;
     }
 }

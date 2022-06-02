@@ -6,11 +6,11 @@ import pl.kielce.tu.sandworm.core.model.Rule;
 public class RuleMatcher {
 
     private final RuleHeaderMatcher headerMatcher;
-    private final RuleOptionsMatcher optionsMatcher;
+    private final PatternMatcher optionsMatcher;
 
     public RuleMatcher(HttpRequest httpRequest) {
         headerMatcher = new RuleHeaderMatcher(httpRequest);
-        optionsMatcher = new RuleOptionsMatcher(httpRequest);
+        optionsMatcher = new PatternMatcher(httpRequest);
     }
 
     public boolean doesHeaderMatch(Rule rule) {

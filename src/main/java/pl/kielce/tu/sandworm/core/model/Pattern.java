@@ -6,7 +6,7 @@ import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
 import java.util.Set;
 
-public record PayloadPattern(String name,
-                             String value,
-                             @Field(type = FieldType.Keyword) Set<Modifier> modifiers) {
+public record Pattern(String name,
+                      String value,
+                      @Field(type = FieldType.Keyword) Set<Modifier> modifiers) {
 }

@@ -3,12 +3,11 @@ package pl.kielce.tu.sandworm.core.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.kielce.tu.sandworm.core.model.Options;
-import pl.kielce.tu.sandworm.core.model.PayloadPattern;
+import pl.kielce.tu.sandworm.core.model.Pattern;
 import pl.kielce.tu.sandworm.core.model.enumeration.option.Modifier;
 
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -27,16 +26,16 @@ public class OptionsParser {
 
     public Options parse(String rule) {
         List<String> optionsSeparated = getOptionsSeparated(rule);
-        Set<PayloadPattern> options = getOptions(optionsSeparated);
+        Set<Pattern> options = getOptions(optionsSeparated);
         return new Options(options);
     }
 
-    private Set<PayloadPattern> getOptions(List<String> optionsSeparated) {
-        Set<PayloadPattern> options = new HashSet<>();
+    private Set<Pattern> getOptions(List<String> optionsSeparated) {
+        Set<Pattern> options = new HashSet<>();
         for (String element : optionsSeparated) {
             String[] nameAndMaybeValue = element.split(COLON);
             if (isNotModifier(nameAndMaybeValue)) {
-                PayloadPattern e = getOption(optionsSeparated, optionsSeparated.indexOf(element), nameAndMaybeValue);
+                Pattern e = getOption(optionsSeparated, optionsSeparated.indexOf(element), nameAndMaybeValue);
                 options.add(e);
             }
         }
@@ -44,7 +43,7 @@ public class OptionsParser {
     }
 
     private List<String> getOptionsSeparated(String line) {
-        Matcher matcher = Pattern.compile(RULE_OPTIONS_REGEX).matcher(line);
+        Matcher matcher = java.util.regex.Pattern.compile(RULE_OPTIONS_REGEX).matcher(line);
         if (matcher.find()) {
             return separateOptions(matcher);
         } else {
@@ -61,11 +60,11 @@ public class OptionsParser {
     }
 
 
-    private PayloadPattern getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
+    private Pattern getOption(List<String> optionsSeparated, int currentIndex, String[] nameAndMaybeValue) {
         Set<Modifier> modifiers = getModifiers(optionsSeparated.subList(currentIndex + 1, optionsSeparated.size()));
         String optionName = nameAndMaybeValue[0].trim();
         String optionValue = nameAndMaybeValue[1].trim().replaceAll(QUOTE_REGEX, EMPTY);
-        return new PayloadPattern(optionName, optionValue, modifiers);
+        return new Pattern(optionName, optionValue, modifiers);
     }
 
     private boolean isNotModifier(String[] nameAndMaybeValue) {

@@ -26,7 +26,7 @@ public class Rule {
     private String message;
     @Field(type = FieldType.Nested, name = "threshold")
     private Threshold threshold;
-    private Set<PayloadPattern> payloadPatterns;
+    private Set<Pattern> patterns;
 
     public Rule(Action action, Header header, Options options) {
         id = options.getId();
@@ -38,7 +38,7 @@ public class Rule {
         destinationAddress = header.getDestinationAddress();
         destinationPort = header.getDestinationPort();
         message = options.getMessage();
-        payloadPatterns = options.getPayloadMatchers();
+        patterns = options.getPatterns();
     }
 
     public Rule(String id, Action action, Threshold threshold) {
@@ -93,6 +93,10 @@ public class Rule {
 
     public Threshold getThreshold() {
         return threshold;
+    }
+
+    public Set<Pattern> getPatterns() {
+        return patterns;
     }
 
     @Override
