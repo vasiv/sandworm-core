@@ -18,20 +18,16 @@ public class AnalysisService {
 
     Logger logger = LoggerFactory.getLogger(AnalysisService.class);
     private final ThreatRepository threatRepository;
+    private final ThresholdService thresholdService;
     private final Set<Rule> dropRules;
     private final Set<Rule> nonDropRules;
     @Value("${alert.directory}")
     private String alertDirectory;
-    private ThresholdService thresholdService;
 
-    public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository) {
+    public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository, ThresholdService thresholdService) {
         this.dropRules = getDropRules(rules);
         this.nonDropRules = getNonDropRules(rules);
         this.threatRepository = threatRepository;
-    }
-
-    public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository, ThresholdService thresholdService) {
-        this(rules, threatRepository);
         this.thresholdService = thresholdService;
     }
 

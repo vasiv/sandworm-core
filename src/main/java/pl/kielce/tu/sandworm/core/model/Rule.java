@@ -38,6 +38,7 @@ public class Rule {
         destinationAddress = header.getDestinationAddress();
         destinationPort = header.getDestinationPort();
         message = options.getMessage();
+        threshold = options.getThreshold();
         patterns = options.getPatterns();
     }
 

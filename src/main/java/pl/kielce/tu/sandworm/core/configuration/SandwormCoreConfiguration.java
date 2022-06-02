@@ -9,6 +9,7 @@ import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
 import pl.kielce.tu.sandworm.core.loader.RulesLoader;
 import pl.kielce.tu.sandworm.core.parser.*;
 import pl.kielce.tu.sandworm.core.service.AnalysisService;
+import pl.kielce.tu.sandworm.core.service.ThresholdService;
 
 import java.io.IOException;
 import java.net.URI;
@@ -29,9 +30,9 @@ public class SandwormCoreConfiguration {
     private String ruleSetResourceName;
 
     @Bean
-    public AnalysisService analysisService(ThreatRepository triggeredRuleRepository)
+    public AnalysisService analysisService(ThreatRepository triggeredRuleRepository, ThresholdService thresholdService)
             throws URISyntaxException, IOException {
-        return new AnalysisService(getHttpRules(), triggeredRuleRepository);
+        return new AnalysisService(getHttpRules(), triggeredRuleRepository, thresholdService);
     }
 
     private URI getResourceUri(String resourceName) throws URISyntaxException {
