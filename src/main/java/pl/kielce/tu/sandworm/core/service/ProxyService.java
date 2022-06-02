@@ -35,8 +35,8 @@ public class ProxyService {
     @Value("${service.proxyService.port}")
     private int port;
 
-    public ResponseEntity<String> proxyRequest(String body, HttpMethod method, HttpServletRequest request,
-                                               HttpServletResponse response) throws URISyntaxException {
+    public ResponseEntity<String> proxyRequest(String body, HttpMethod method, HttpServletRequest request)
+            throws URISyntaxException {
         URI uri = generateDestinationUri(request);
         HttpHeaders headers = prepareHeaders(request);
         HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);

@@ -63,6 +63,10 @@ public class Rule {
         return action;
     }
 
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
     public String getSourceAddress() {
         return sourceAddress;
     }

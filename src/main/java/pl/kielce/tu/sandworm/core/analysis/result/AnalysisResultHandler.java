@@ -8,7 +8,9 @@ import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Rule;
 import pl.kielce.tu.sandworm.core.model.Threat;
 import pl.kielce.tu.sandworm.core.model.Threshold;
+import pl.kielce.tu.sandworm.core.model.enumeration.Action;
 import pl.kielce.tu.sandworm.core.repository.ThreatRepository;
+import pl.kielce.tu.sandworm.core.service.ThresholdService;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,14 +24,18 @@ public class AnalysisResultHandler extends Thread implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(AnalysisResultHandler.class);
     private static final String JSON_EXTENSION = ".json";
     private final ThreatRepository triggeredRuleRepository;
+    private final ThresholdService thresholdService;
     private final Set<Rule> triggeredRules;
     private final HttpRequest requestData;
     private final ObjectWriter jsonWriter;
     private final String alertDirectory;
 
     public AnalysisResultHandler(AnalysisResult analysisResult,
-                                 ThreatRepository threatRepository, String alertDirectory) {
+                                 ThreatRepository threatRepository,
+                                 String alertDirectory,
+                                 ThresholdService thresholdService) {
         this.triggeredRuleRepository = threatRepository;
+        this.thresholdService = thresholdService;
         this.alertDirectory = alertDirectory;
         triggeredRules = analysisResult.getTriggeredRules();
         requestData = analysisResult.getRequest();
@@ -60,8 +66,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
     }
 
     private boolean isActionAlert(Rule rule) {
-//        return Rule.Action.ALERT.equals(rule.getAction());
-        return true;
+        return Action.ALERT.equals(rule.getAction());
     }
 
     private void handleAlertAction(Threat threat) throws IOException {
@@ -76,7 +81,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
             logger.debug("Threshold is not defined or type is Pass. Threshold reached.");
             return true;
         }
-        return true;
+        return thresholdService.isThresholdReached(threat);
     }
 
     private boolean isTypePass(Threshold threshold) {

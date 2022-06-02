@@ -30,8 +30,8 @@ public class AnalysisController {
     }
 
     @RequestMapping("/**")
-    public ResponseEntity<String> analyzeRequest(@RequestBody(required = false) String body, HttpMethod method,
-                                                 HttpServletRequest request, HttpServletResponse response)
+    public ResponseEntity<String> analyzeRequest(@RequestBody(required = false) String body,
+                                                 HttpMethod method, HttpServletRequest request)
             throws URISyntaxException {
         HttpRequest requestData = new HttpRequest(request, body);
         analysisService.performNonDropAnalysis(requestData);
@@ -39,7 +39,7 @@ public class AnalysisController {
         if (isDropNeeded) {
             return getResponseEntityForDroppedRequest();
         }
-        return proxyService.proxyRequest(body, method, request, response);
+        return proxyService.proxyRequest(body, method, request);
     }
 
     private ResponseEntity<String> getResponseEntityForDroppedRequest() {

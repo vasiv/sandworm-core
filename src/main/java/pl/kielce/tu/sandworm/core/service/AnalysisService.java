@@ -17,17 +17,22 @@ import java.util.stream.Collectors;
 public class AnalysisService {
 
     Logger logger = LoggerFactory.getLogger(AnalysisService.class);
-
-    @Value("${alert.directory}")
-    private String alertDirectory;
     private final ThreatRepository threatRepository;
     private final Set<Rule> dropRules;
     private final Set<Rule> nonDropRules;
+    @Value("${alert.directory}")
+    private String alertDirectory;
+    private ThresholdService thresholdService;
 
     public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository) {
         this.dropRules = getDropRules(rules);
         this.nonDropRules = getNonDropRules(rules);
         this.threatRepository = threatRepository;
+    }
+
+    public AnalysisService(Set<Rule> rules, ThreatRepository threatRepository, ThresholdService thresholdService) {
+        this(rules, threatRepository);
+        this.thresholdService = thresholdService;
     }
 
     public void performNonDropAnalysis(HttpRequest requestData) {
@@ -51,7 +56,8 @@ public class AnalysisService {
     }
 
     private void handleResult(AnalysisResult analysisResult) {
-        AnalysisResultHandler handler = new AnalysisResultHandler(analysisResult, threatRepository, alertDirectory);
+        AnalysisResultHandler handler =
+                new AnalysisResultHandler(analysisResult, threatRepository, alertDirectory, thresholdService);
         handler.start();
     }
 
