@@ -23,7 +23,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(AnalysisResultHandler.class);
     private static final String JSON_EXTENSION = ".json";
-    private final ThreatRepository triggeredRuleRepository;
+    private final ThreatRepository threatRepository;
     private final ThresholdService thresholdService;
     private final Set<Rule> triggeredRules;
     private final HttpRequest requestData;
@@ -34,7 +34,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
                                  ThreatRepository threatRepository,
                                  String alertDirectory,
                                  ThresholdService thresholdService) {
-        this.triggeredRuleRepository = threatRepository;
+        this.threatRepository = threatRepository;
         this.thresholdService = thresholdService;
         this.alertDirectory = alertDirectory;
         triggeredRules = analysisResult.getTriggeredRules();
@@ -62,7 +62,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
     }
 
     private void saveLog(Threat threat) {
-        triggeredRuleRepository.save(threat);
+        threatRepository.save(threat);
     }
 
     private boolean isActionAlert(Rule rule) {

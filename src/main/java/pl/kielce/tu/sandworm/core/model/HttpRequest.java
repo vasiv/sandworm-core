@@ -12,15 +12,18 @@ public class HttpRequest {
     private static final String SOURCE_ADDRESS_HEADER_NAME = "X-Forwarded-For";
     private static final String SOURCE_PORT_HEADER_NAME = "X-Forwarded-Port";
     private static final String HOST_HEADER_NAME = "host";
-    private final String sourceAddress;
-    private final String sourcePort;
-    private final String destinationAddress;
-    private final String destinationPort;
-    private final String uri;
-    private final Map<String, String> headers;
-    private final String method;
-    private final String body;
-    private final long createdAt;
+    private String sourceAddress;
+    private String sourcePort;
+    private String destinationAddress;
+    private String destinationPort;
+    private String uri;
+    private Map<String, String> headers;
+    private String method;
+    private String body;
+    private long createdAt;
+
+    public HttpRequest() {
+    }
 
     public HttpRequest(HttpServletRequest request, String body) {
         createdAt = System.currentTimeMillis();
