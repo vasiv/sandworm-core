@@ -1,5 +1,6 @@
 package pl.kielce.tu.sandworm.core.analysis.matcher;
 
+import org.apache.commons.lang3.StringUtils;
 import pl.kielce.tu.sandworm.core.model.HttpRequest;
 import pl.kielce.tu.sandworm.core.model.Pattern;
 import pl.kielce.tu.sandworm.core.model.Rule;
@@ -53,7 +54,7 @@ public class PatternMatcher {
     }
 
     private boolean isPatternNotPresent(String data, String pattern) {
-        return !data.contains(pattern);
+        return StringUtils.isNotEmpty(data) && !data.contains(pattern);
     }
 
 }

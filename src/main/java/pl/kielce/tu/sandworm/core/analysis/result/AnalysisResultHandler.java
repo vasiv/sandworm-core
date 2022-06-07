@@ -55,7 +55,7 @@ public class AnalysisResultHandler extends Thread implements Runnable {
         for (Rule rule : triggeredRules) {
             Threat threat = new Threat(requestData, rule);
             saveLog(threat);
-            if (isActionAlert(rule)) {
+            if (isActionAlertOrDrop(rule)) {
                 handleAlertAction(threat);
             }
         }
@@ -65,8 +65,8 @@ public class AnalysisResultHandler extends Thread implements Runnable {
         threatRepository.save(threat);
     }
 
-    private boolean isActionAlert(Rule rule) {
-        return Action.ALERT.equals(rule.getAction());
+    private boolean isActionAlertOrDrop(Rule rule) {
+        return Action.ALERT.equals(rule.getAction()) || Action.DROP.equals(rule.getAction());
     }
 
     private void handleAlertAction(Threat threat) throws IOException {
